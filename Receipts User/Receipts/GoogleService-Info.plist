@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>650743322071-ua8f6qbeq70a0batrv891ljdjqp8mmp1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.650743322071-ua8f6qbeq70a0batrv891ljdjqp8mmp1</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAn_HHQhGUFexWJkD_aQJklN7PjHqbvkQ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>650743322071</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.g30r93g.Receipts</string>
+	<key>PROJECT_ID</key>
+	<string>receipts-baa60</string>
+	<key>STORAGE_BUCKET</key>
+	<string>receipts-baa60.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:650743322071:ios:6c9e93c6ccdb55cc</string>
+	<key>DATABASE_URL</key>
+	<string>https://receipts-baa60.firebaseio.com</string>
+	<key>FirebaseScreenReportingEnabled</key>
+	<false/>
+</dict>
+</plist>
