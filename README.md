@@ -14,4 +14,20 @@ And here I am, doing my bit for the planet :)
  3. When at a supported shop, the user scans their QR code
  4. After the transaction is successful, the receipt contents and payment information are sent to the user's app to be viewed
 
+## How to run this project
+
+In order to run this project, you'll need:
+ 1. An Apple ID in order to sign certificates
+ 2. A physical device to run the Receipts Store - Uses the rear camera
+
+Setup your user account first, then the store account.
+
+You'll need to add some products to your store account. Just use items lying around with a barcode or add items manually.
+If the item exists in the UPC database, then confirm the match.
+
+Once you've done that, scan a few of those items, perform the checkout and scan your QR code in the User application and you're done!
+
+
+##
+
 Copyright © George Nick Gorzynski ([g30r93g](https://github.com/g30r93g)) - 2019
