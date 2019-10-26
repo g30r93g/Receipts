@@ -22,7 +22,6 @@
 		1FDD918F230FF81D008EE678 /* Receipts_StoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD918E230FF81D008EE678 /* Receipts_StoreUITests.swift */; };
 		1FDD919D230FF8CA008EE678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD919C230FF8CA008EE678 /* GoogleService-Info.plist */; };
 		1FDD91A5230FF920008EE678 /* BorderedTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */; };
-		1FDD91A6230FF920008EE678 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A1230FF920008EE678 /* SegmentedControl.swift */; };
 		1FDD91A7230FF920008EE678 /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A2230FF920008EE678 /* Round.swift */; };
 		1FDD91A8230FF920008EE678 /* Image Text Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A3230FF920008EE678 /* Image Text Field.swift */; };
 		1FDD91A9230FF920008EE678 /* Gradient Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A4230FF920008EE678 /* Gradient Background.swift */; };
@@ -73,7 +72,6 @@
 		1FDD9190230FF81D008EE678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FDD919C230FF8CA008EE678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedTableCell.swift; sourceTree = "<group>"; };
-		1FDD91A1230FF920008EE678 /* SegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		1FDD91A2230FF920008EE678 /* Round.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
 		1FDD91A3230FF920008EE678 /* Image Text Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image Text Field.swift"; sourceTree = "<group>"; };
 		1FDD91A4230FF920008EE678 /* Gradient Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gradient Background.swift"; sourceTree = "<group>"; };
@@ -131,6 +129,14 @@
 				1FDD916F230FF81C008EE678 /* Main.storyboard */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		1FA5BF962363A0E90005BFAB /* Table View Cell */ = {
+			isa = PBXGroup;
+			children = (
+				1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */,
+			);
+			path = "Table View Cell";
 			sourceTree = "<group>";
 		};
 		1FDD915D230FF81C008EE678 = {
@@ -204,11 +210,10 @@
 		1FDD919F230FF920008EE678 /* Supporting Views */ = {
 			isa = PBXGroup;
 			children = (
-				1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */,
-				1FDD91A1230FF920008EE678 /* SegmentedControl.swift */,
 				1FDD91A2230FF920008EE678 /* Round.swift */,
 				1FDD91A3230FF920008EE678 /* Image Text Field.swift */,
 				1FDD91A4230FF920008EE678 /* Gradient Background.swift */,
+				1FA5BF962363A0E90005BFAB /* Table View Cell */,
 			);
 			path = "Supporting Views";
 			sourceTree = "<group>";
@@ -443,7 +448,6 @@
 				1F799DCF231001A700BD9166 /* SignInViewController.swift in Sources */,
 				1FDD9174230FF81C008EE678 /* Receipts_Store.xcdatamodeld in Sources */,
 				1F799DCC231001A700BD9166 /* CompleteSignUpViewController.swift in Sources */,
-				1FDD91A6230FF920008EE678 /* SegmentedControl.swift in Sources */,
 				1F799DC8231001A700BD9166 /* SignUpViewController.swift in Sources */,
 				1FDD91A7230FF920008EE678 /* Round.swift in Sources */,
 				1FDD91AF230FF928008EE678 /* Receipts.swift in Sources */,

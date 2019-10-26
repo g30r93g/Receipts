@@ -17,7 +17,7 @@ class CompleteSignUpViewController: UIViewController {
 	
 	// MARK: Variables
 	var lastSentDate: Date = Date()
-	var verificationTimer: Timer!
+	var alreadyVerified: Bool = false
 	
 	// MARK: View Controller Life Cycle
 	override func viewDidAppear(_ animated: Bool) {
@@ -30,38 +30,29 @@ class CompleteSignUpViewController: UIViewController {
 	private func sendVerificationEmail() {
 		self.startLoading()
 		
+		if self.alreadyVerified { return }
 		Authentication.account.sendEmailVerification { (success) in
+			if self.alreadyVerified { return }
 			if success {
-				self.lastSentDate = Date()
-				
-				self.verificationTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) { (timer) in
-					self.determineVerificatonStatus()
+				print("Verified user's email!")
+				self.stopLoading()
+				self.alreadyVerified = true
+
+				if !self.alreadyVerified {
+					self.performSegue(withIdentifier: "Upload Logo", sender: nil)
 				}
-				self.verificationTimer.fire()
 			} else {
-				fatalError()
+				fatalError("Could not verify user email.")
 			}
 		}
 	}
 	
 	private func resendVerificationEmail() {
-		if Date() > lastSentDate.adding(seconds: 60) {
+		if Date() > self.lastSentDate.adding(seconds: 20) {
 			self.sendVerificationEmail()
 		}
 		
 		self.lastSentDate = Date()
-	}
-	
-	private func determineVerificatonStatus() {
-		if Authentication.account.isVerified {
-			print("User verified!")
-			self.verificationTimer.invalidate()
-			self.stopLoading()
-			
-			self.performSegue(withIdentifier: "Add Logo", sender: self)
-		} else {
-			print("Awaiting verification...")
-		}
 	}
 	
 	private func startLoading() {

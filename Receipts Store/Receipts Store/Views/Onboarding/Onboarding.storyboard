@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0M1-sB-Nq4">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="0M1-sB-Nq4">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,8 +16,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEv-Q6-Nsz">
-                                <rect key="frame" x="128" y="124" width="158" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipts Store" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DEv-Q6-Nsz">
+                                <rect key="frame" x="75.5" y="124" width="263" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="f6p-Cv-SLJ"/>
                                 </constraints>
@@ -495,14 +495,14 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your inbox to verify your email. When you're done, come back and we'll sign you in." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ToQ-9j-3Li">
-                                <rect key="frame" x="40" y="130" width="334" height="79"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please check your inbox to verify your email. When you're done, come back and we'll take you to the next step." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ToQ-9j-3Li">
+                                <rect key="frame" x="40" y="130" width="334" height="105.5"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gb5-1Z-uaR" customClass="RoundButton" customModule="Receipts_Store" customModuleProvider="target">
-                                <rect key="frame" x="50" y="314" width="314" height="60"/>
+                                <rect key="frame" x="50" y="340.5" width="314" height="60"/>
                                 <color key="backgroundColor" name="Primary Accent"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="33A-tB-8Vl"/>
@@ -535,7 +535,7 @@
                                 <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fLh-0w-6Jc" customClass="RoundButton" customModule="Receipts_Store" customModuleProvider="target">
-                                <rect key="frame" x="50" y="239" width="314" height="60"/>
+                                <rect key="frame" x="50" y="265.5" width="314" height="60"/>
                                 <color key="backgroundColor" name="Confirm"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="fcD-5c-kiu"/>
@@ -581,7 +581,7 @@
                         <outlet property="emailVerificationLoading" destination="zTh-WO-W9X" id="hV8-7F-ybs"/>
                         <outlet property="openMail" destination="fLh-0w-6Jc" id="vqV-rT-4FZ"/>
                         <outlet property="resendEmail" destination="gb5-1Z-uaR" id="hmB-AN-x54"/>
-                        <segue destination="VYE-So-zUT" kind="presentation" identifier="Add Logo" modalPresentationStyle="currentContext" modalTransitionStyle="crossDissolve" id="K9h-aq-bWR"/>
+                        <segue destination="VYE-So-zUT" kind="presentation" identifier="Upload Logo" id="Jos-lz-3OP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uZE-qN-6Bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -594,7 +594,7 @@
                 <viewControllerPlaceholder storyboardName="Main" id="QO8-oT-wCe" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DxA-M3-xfJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2965" y="75"/>
+            <point key="canvasLocation" x="4336" y="75"/>
         </scene>
         <!--Complete Sign Up View Controller-->
         <scene sceneID="z0R-Eo-Bxl">
@@ -613,7 +613,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Z75-4h-iA2">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Z75-4h-iA2">
                                 <rect key="frame" x="359" y="40" width="20" height="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -677,6 +677,7 @@
                             <constraint firstItem="MHB-aa-0Qb" firstAttribute="top" secondItem="Uva-f6-GZV" secondAttribute="bottom" constant="20" id="KjC-Dg-2HP"/>
                             <constraint firstItem="Z75-4h-iA2" firstAttribute="top" secondItem="Uva-f6-GZV" secondAttribute="top" id="Ok7-VU-8Zx"/>
                             <constraint firstItem="MHB-aa-0Qb" firstAttribute="leading" secondItem="9QS-3w-9T2" secondAttribute="leading" constant="40" id="T9g-nX-bS4"/>
+                            <constraint firstItem="9QS-3w-9T2" firstAttribute="trailing" secondItem="Z75-4h-iA2" secondAttribute="trailing" constant="35" id="Xqj-8C-b0H"/>
                             <constraint firstItem="Uva-f6-GZV" firstAttribute="centerX" secondItem="CWW-Vf-4dm" secondAttribute="centerX" id="ZW5-Y3-KrK"/>
                             <constraint firstItem="z6i-Qi-mXm" firstAttribute="trailing" secondItem="MHB-aa-0Qb" secondAttribute="trailing" constant="-10" id="dz2-vr-4XI"/>
                             <constraint firstItem="Z75-4h-iA2" firstAttribute="bottom" secondItem="Uva-f6-GZV" secondAttribute="bottom" id="fIg-Sa-uad"/>
@@ -699,10 +700,10 @@
     </scenes>
     <resources>
         <image name="Cross" width="350" height="350"/>
-        <image name="ellipsis" catalog="system" width="64" height="20"/>
+        <image name="ellipsis" catalog="system" width="64" height="18"/>
         <image name="envelope.fill" catalog="system" width="64" height="46"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
-        <image name="phone.fill" catalog="system" width="64" height="58"/>
+        <image name="phone.fill" catalog="system" width="64" height="56"/>
         <namedColor name="Background">
             <color red="0.052000001072883606" green="0.054000001400709152" blue="0.071000002324581146" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

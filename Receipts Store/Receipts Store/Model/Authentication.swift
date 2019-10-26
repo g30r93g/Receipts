@@ -32,19 +32,19 @@ class Authentication {
 	
 	// MARK: Auth Data Variables
 	var uniqueIdentifier: String {
-		if self.isSignedIn {
-			return self.auth.currentUser!.uid
-		} else {
-			return ""
-		}
+		return self.auth.currentUser?.uid ?? ""
 	}
 	
+	/// Determines if user is signed in
 	var isSignedIn: Bool {
 		return self.auth.currentUser != nil
 	}
 	
 	/// Determines if the user is verified
 	var isVerified: Bool {
+		guard let user = self.auth.currentUser else { return false }
+		user.reload()
+		
 		if self.isSignedIn {
 			return self.auth.currentUser!.isEmailVerified
 		} else {
@@ -132,9 +132,9 @@ class Authentication {
 		if self.isSignedIn {
 			let credential = EmailAuthProvider.credential(withEmail: self.auth.currentUser!.email!, password: oldPassword)
 			self.auth.currentUser!.reauthenticateAndRetrieveData(with: credential) { (result, error) in
-				if let error = error {
+				if error != nil {
 					completion(false)
-				} else if let result = result {
+				} else if result != nil {
 					completion(true)
 				} else {
 					completion(false)
@@ -198,11 +198,12 @@ class Authentication {
 	func sendEmailVerification(completion: @escaping(Bool) -> Void) {
 		if self.isSignedIn {
 			self.auth.currentUser!.sendEmailVerification { (error) in
-				if let error = error {
-					fatalError("\(error)")
+				if error != nil {
 					completion(false)
 				} else {
-					completion(true)
+					self.monitorVerifiedStatus { (verified) in
+						completion(verified)
+					}
 				}
 			}
 		} else {
@@ -210,6 +211,24 @@ class Authentication {
 			completion(false)
 		}
     }
+	
+	private func monitorVerifiedStatus(completion: @escaping(Bool) -> Void) {
+		var counter = 30
+		
+		Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
+			if self.isVerified {
+				timer.invalidate()
+				completion(true)
+			}
+			
+			if counter == 0 {
+				timer.invalidate()
+				completion(false)
+			} else {
+				counter -= 1
+			}
+		}.fire()
+	}
 	
 	// MARK: Firestore Variables
 	private let data = Firestore.firestore()
@@ -230,7 +249,7 @@ class Authentication {
 		}
 	}
 	
-	// Get's user information
+	// Gets user information
 	func getUserInfo(type: UserDetails, completion: @escaping(String) -> Void) {
 		if self.isSignedIn {
 			guard let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier) else { return }
