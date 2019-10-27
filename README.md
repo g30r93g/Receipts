@@ -5,7 +5,9 @@
 I was waiting at McDonalds for my order and looked at how long the receipt was and thought,
 "Was all that ink and paper really necessary to tell me that my order number is 27 and that I ordered a Fanta?"
 Then my friend told me that receipts aren't recyclable due to the paper having plastic in it.
-And here I am, doing my bit for the planet :)
+A few weeks later, I find myself at a shop with my friends. I purchased an item and I was asked if I'd like my receipt emailed. I thought "Well it's better than paper" only to find myself not being able to look at the screen and being accustomed to a Mac's keyboard layout, the @ and " symbols got mixed up and the email wasn't sent. Frustrating.
+
+So I decided to do something about this just as a proof of concept.
 
 ## How it works
 
