@@ -335,7 +335,7 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
@@ -366,7 +366,7 @@
                                 </constraints>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="name"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="alert" returnKeyType="next" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="given-name"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="8"/>
@@ -581,7 +581,8 @@
                         <outlet property="emailVerificationLoading" destination="zTh-WO-W9X" id="hV8-7F-ybs"/>
                         <outlet property="openMail" destination="fLh-0w-6Jc" id="vqV-rT-4FZ"/>
                         <outlet property="resendEmail" destination="gb5-1Z-uaR" id="hmB-AN-x54"/>
-                        <segue destination="VYE-So-zUT" kind="presentation" identifier="Upload Logo" id="Jos-lz-3OP"/>
+                        <segue destination="VYE-So-zUT" kind="presentation" identifier="Upload Logo" modalPresentationStyle="currentContext" modalTransitionStyle="crossDissolve" id="Jos-lz-3OP"/>
+                        <segue destination="QO8-oT-wCe" kind="presentation" identifier="Complete Sign Up" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="y1b-bc-6gu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uZE-qN-6Bq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -594,18 +595,18 @@
                 <viewControllerPlaceholder storyboardName="Main" id="QO8-oT-wCe" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DxA-M3-xfJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4336" y="75"/>
+            <point key="canvasLocation" x="2848" y="75"/>
         </scene>
-        <!--Complete Sign Up View Controller-->
+        <!--Add Logo View Controller-->
         <scene sceneID="z0R-Eo-Bxl">
             <objects>
-                <viewController id="VYE-So-zUT" customClass="CompleteSignUpViewController" customModule="Receipts_Store" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="VYE-So-zUT" customClass="AddLogoViewController" customModule="Receipts_Store" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CWW-Vf-4dm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Details" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uva-f6-GZV">
-                                <rect key="frame" x="129" y="40" width="156" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Upload Logo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uva-f6-GZV">
+                                <rect key="frame" x="121" y="40" width="172" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2dz-Ol-jmd"/>
                                 </constraints>
@@ -628,7 +629,7 @@
                                     <constraint firstAttribute="height" constant="60" id="8Fi-rx-bHD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
-                                <state key="normal" title="Upload">
+                                <state key="normal" title="Choose">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -641,6 +642,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="openMailTapped:" destination="Fdi-Qh-qkd" eventType="touchUpInside" id="YJ3-3G-WZt"/>
+                                    <action selector="uploadTapped:" destination="VYE-So-zUT" eventType="touchUpInside" id="qV3-EH-oeo"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Gfx-W9-0EZ" customClass="RoundImageView" customModule="Receipts_Store" customModuleProvider="target">
@@ -689,7 +691,9 @@
                         <viewLayoutGuide key="safeArea" id="9QS-3w-9T2"/>
                     </view>
                     <connections>
-                        <outlet property="emailVerificationLoading" destination="Z75-4h-iA2" id="hAw-3B-LcE"/>
+                        <outlet property="logo" destination="Gfx-W9-0EZ" id="r5s-DC-F1q"/>
+                        <outlet property="upload" destination="z6i-Qi-mXm" id="JCb-u2-beJ"/>
+                        <outlet property="uploadIndicator" destination="Z75-4h-iA2" id="NjM-yo-HDQ"/>
                         <segue destination="QO8-oT-wCe" kind="presentation" identifier="Complete Sign Up" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="NS1-Eu-abo"/>
                     </connections>
                 </viewController>
@@ -721,7 +725,7 @@
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NS1-Eu-abo"/>
-        <segue reference="pea-o5-LVU"/>
+        <segue reference="y1b-bc-6gu"/>
+        <segue reference="HWx-SS-EYR"/>
     </inferredMetricsTieBreakers>
 </document>

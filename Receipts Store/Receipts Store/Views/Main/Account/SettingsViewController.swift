@@ -18,8 +18,6 @@ class SettingsViewController: UITableViewController {
 	
 	@IBOutlet weak var biometricAuthentication: UISwitch!
 	
-	// MARK: Variables
-	
 	// MARK: View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +27,13 @@ class SettingsViewController: UITableViewController {
 	
 	// MARK: Methods
 	private func setupView() {
+		self.storeName.text = Authentication.account.storeDetails.name
+		self.storeEmail.text = Authentication.account.storeDetails.email
+		self.storePhoneNumber.text = Authentication.account.storeDetails.phoneNumber
 		
+		if let storeLogo = Authentication.account.storeDetails.logo {
+			self.storeIcon.image = storeLogo
+		}
 	}
 	
 	private func showConfirmationAlert(text: String) {

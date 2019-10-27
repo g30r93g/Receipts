@@ -36,12 +36,6 @@ class PaymentViewController: UIViewController {
 			self.cashBreakdown.text = "£\(cardText)"
 		}
 	}
-	var totalAmount: Double = 0.0 {
-		didSet {
-			let totalText = String(format: "%.2f", self.cashAmount + self.cardAmount)
-			self.totalBreakdown.text = "£\(totalText)"
-		}
-	}
 
 	// MARK: View Controller Life Cycle
     override func viewDidLoad() {
@@ -59,7 +53,10 @@ class PaymentViewController: UIViewController {
     
 	// MARK: Methods
 	private func setupView() {
+		self.cashBreakdown.text = "£0.00"
+		self.cashBreakdown.text = "£0.00"
 		
+		self.totalBreakdown.text = "£\(String(format: "%.2f", Sale.current.total))"
 	}
 	
 	private func displayEntryField(for paymentType: PaymentType) {
@@ -85,7 +82,10 @@ class PaymentViewController: UIViewController {
 	}
 	
 	@IBAction func payTapped(_ sender: RoundButton) {
+		let cashPayment: Receipts.PaymentMethod = Receipts.PaymentMethod(type: .cash, amount: self.cashAmount, cardNumber: nil, cardVendor: nil, creditRemaining: nil)
+		let cardPayment: Receipts.PaymentMethod = Receipts.PaymentMethod(type: .card, amount: self.cardAmount, cardNumber: 5355220212344321, cardVendor: .mastercard, creditRemaining: nil)
 		
+		Sale.current.attatchPaymentDetails(details: [cashPayment, cardPayment])
 	}
 
 }

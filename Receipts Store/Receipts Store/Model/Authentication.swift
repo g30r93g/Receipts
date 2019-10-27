@@ -17,11 +17,16 @@ class Authentication {
 	// MARK: Shared Instance
 	static let account = Authentication()
 	
-	// MARK: Enums
-	enum UserDetails {
-		case name
-		case email
-		case phoneNumber
+	// MARK: Structs
+	struct Store {
+		let name: String
+		let email: String
+		let phoneNumber: String
+		var logo: UIImage!
+		
+		mutating func addLogo(_ image: UIImage) {
+			self.logo = image
+		}
 	}
 	
 	// MARK: Storage Variables
@@ -31,6 +36,8 @@ class Authentication {
     private let auth = Auth.auth()
 	
 	// MARK: Auth Data Variables
+	var storeDetails: Store!
+	
 	var uniqueIdentifier: String {
 		return self.auth.currentUser?.uid ?? ""
 	}
@@ -93,6 +100,8 @@ class Authentication {
 				completion(false)
 			} else {
 				print("User signed in! - \(user!)")
+				self.updateDetails()
+				
 				completion(true)
 			}
         }
@@ -107,9 +116,11 @@ class Authentication {
 			} else {
 				self.auth.currentUser!.createProfileChangeRequest().displayName = name
 				
-				self.storeUserDetails(name: name, email: email, phoneNumber: phoneNumber) { (success) in
+				self.uploadStoreDetails(name: name, email: email, phoneNumber: phoneNumber) { (success) in
 					completion(success)
 				}
+				
+				self.storeDetails = Store(name: name, email: email, phoneNumber: phoneNumber, logo: nil)
 			}
 		}
     }
@@ -213,19 +224,10 @@ class Authentication {
     }
 	
 	private func monitorVerifiedStatus(completion: @escaping(Bool) -> Void) {
-		var counter = 30
-		
 		Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
 			if self.isVerified {
 				timer.invalidate()
 				completion(true)
-			}
-			
-			if counter == 0 {
-				timer.invalidate()
-				completion(false)
-			} else {
-				counter -= 1
 			}
 		}.fire()
 	}
@@ -234,8 +236,14 @@ class Authentication {
 	private let data = Firestore.firestore()
 	
 	// MARK: Firestore Methods
+	func updateDetails() {
+		self.getStoreInfo { (storeInformation) in
+			self.storeDetails = storeInformation
+		}
+	}
+	
 	/// Stores user's details
-    func storeUserDetails(name: String, email: String, phoneNumber: String, completion: @escaping(Bool) -> Void) {
+	func uploadStoreDetails(name: String, email: String, phoneNumber: String, completion: @escaping(Bool) -> Void) {
 		guard let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier) else { completion(false); return }
 		
 		userDocument.setData(["storeName": name, "email": email, "phoneNumber": phoneNumber, "receipts": [], "newReceipts": [], "prefs" : ["pushNotifs": true, "emailNotifs": false]], merge: false) { (error) in
@@ -249,50 +257,61 @@ class Authentication {
 		}
 	}
 	
-	// Gets user information
-	func getUserInfo(type: UserDetails, completion: @escaping(String) -> Void) {
+	// Gets store information
+	private func getStoreInfo(completion: @escaping(Store) -> Void) {
 		if self.isSignedIn {
-			guard let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier) else { return }
+			let storeDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier)
 			
-			switch type {
-			case .name:
-				userDocument.getDocument { (document, error) in
-					if let error = error {
-						fatalError("\(error)")
-						return
-					} else if let document = document {
-						completion(document.get("storeName") as! String)
-					}
-				}
-			case .email:
-				completion(self.auth.currentUser!.email!)
-			case .phoneNumber:
-				userDocument.getDocument { (document, error) in
-					if let error = error {
-						fatalError("\(error)")
-						return
-					} else if let document = document {
-						completion(document.get("phoneNumber") as! String)
+			storeDocument.getDocument { (document, error) in
+				if let error = error {
+					fatalError("\(error)")
+					return
+				} else if let document = document {
+					let storeName: String = document.get("storeName") as! String
+					let email: String = self.auth.currentUser!.email!
+					let phoneNumber: String = document.get("phoneNumber") as! String
+					
+					self.retrieveLogo { (logo) in
+						completion(Store(name: storeName, email: email, phoneNumber: phoneNumber, logo: logo))
 					}
 				}
 			}
 		} else {
-			fatalError()
-			return
+			completion(Store(name: "", email: "", phoneNumber: "", logo: nil))
 		}
 	}
 	
-	func uploadImage(image: UIImage, completion: @escaping(Bool) -> Void) {
-		guard let image = image.pngData() else { fatalError(); completion(false) }
+	func uploadLogo(storeLogo: UIImage, completion: @escaping(Bool) -> Void) {
+		guard let image = storeLogo.pngData() else { fatalError(); completion(false) }
 		
-		let imageStorage = self.storage.reference().child("Store Logos/\(self.uniqueIdentifier)")
+		let imageStorage = self.storage.reference(withPath: "Store_Logos").child("\(self.uniqueIdentifier).png")
+		let imageMetadata = StorageMetadata()
+		imageMetadata.contentType = "image/png"
 		
-		imageStorage.putData(image, metadata: nil) { (metadata, error) in
+		imageStorage.putData(image, metadata: imageMetadata) { (metadata, error) in
 			if let error = error {
 				fatalError("\(error)")
 				completion(false)
 			} else {
-				
+				self.storeDetails.addLogo(storeLogo)
+				completion(true)
+			}
+		}
+	}
+	
+	func retrieveLogo(completion: @escaping(UIImage) -> Void) {
+		let imageStorage = self.storage.reference(withPath: "Store_Logos").child("\(self.uniqueIdentifier).png")
+		
+		imageStorage.getData(maxSize: (1 * 1024 * 1024)) { (data, error) in
+			if let error = error {
+				print(error.localizedDescription)
+				completion(UIImage())
+			} else {
+				if let data = data {
+					completion(UIImage(data: data)!)
+				} else {
+					completion(UIImage())
+				}
 			}
 		}
 	}

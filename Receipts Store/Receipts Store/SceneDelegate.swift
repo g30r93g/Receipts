@@ -54,11 +54,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	
 	// MARK: - Storyboard Methods
 	func determineStoryboard() {
-		if Authentication.account.isSignedIn == true {
+		if Authentication.account.isSignedIn {
 			// Send to 'Main.storyboard'
 			let storyboard = UIStoryboard(name: "Main", bundle: nil)
 			let firstVC = storyboard.instantiateInitialViewController()
 			self.window?.rootViewController = firstVC
+			Authentication.account.updateDetails()
 		} else {
 			// Send to 'Onboarding.storyboard'
 			let storyboard = UIStoryboard(name: "Onboarding", bundle: nil)

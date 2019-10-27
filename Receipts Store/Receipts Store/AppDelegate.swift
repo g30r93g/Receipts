@@ -27,9 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		db.settings = settings
 		
 		// WARNING
-		Authentication.account.signOut { (_) in
-			print("Signed out on launch.")
-		}
+//		Authentication.account.signOut { (_) in
+//			print("Signed out on launch.")
+//		}
 		
 		return true
 	}

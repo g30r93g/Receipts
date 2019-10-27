@@ -106,10 +106,10 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <outlet property="cost" destination="ZC5-pd-jUJ" id="Z7a-Jy-sTA"/>
-                                            <outlet property="notificationIndicator" destination="66b-v2-e5I" id="Yhd-rM-dAB"/>
-                                            <outlet property="receiptTime" destination="u1m-Dt-vDi" id="pMl-oe-P1g"/>
-                                            <outlet property="storeName" destination="0B2-ty-ylG" id="uEs-zo-UYz"/>
+                                            <outlet property="dateTime" destination="u1m-Dt-vDi" id="lhE-DF-ruv"/>
+                                            <outlet property="identifier" destination="0B2-ty-ylG" id="uqw-ly-12S"/>
+                                            <outlet property="seenIndicator" destination="66b-v2-e5I" id="h1x-XT-in0"/>
+                                            <outlet property="total" destination="ZC5-pd-jUJ" id="gxk-eB-crw"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -145,10 +145,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UjN-tY-eBd">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UjN-tY-eBd" customClass="ScannerView" customModule="Receipts_Store" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="636"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCs-bI-25z" customClass="RoundButton" customModule="Receipts" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PCs-bI-25z" customClass="RoundButton" customModule="Receipts_Store" customModuleProvider="target">
                                         <rect key="frame" x="334" y="20" width="60" height="60"/>
                                         <color key="backgroundColor" name="Secondary Accent"/>
                                         <constraints>
@@ -177,7 +177,7 @@
                                     <constraint firstItem="PCs-bI-25z" firstAttribute="top" secondItem="UjN-tY-eBd" secondAttribute="top" constant="20" id="TSp-65-IDg"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSZ-kh-ZSV" customClass="RoundButton" customModule="Receipts" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSZ-kh-ZSV" customClass="RoundButton" customModule="Receipts_Store" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="60" height="60"/>
                                 <color key="backgroundColor" name="Primary Accent"/>
                                 <constraints>
@@ -230,6 +230,7 @@
                         <viewLayoutGuide key="safeArea" id="ZRo-i8-TN5"/>
                     </view>
                     <connections>
+                        <outlet property="camera" destination="UjN-tY-eBd" id="C3Z-Vc-zE3"/>
                         <outlet property="flash" destination="PCs-bI-25z" id="qd1-L9-P2x"/>
                         <outlet property="instructions" destination="dRU-UJ-CNn" id="TJi-pA-VcF"/>
                     </connections>
@@ -250,7 +251,7 @@
                                 <rect key="frame" x="0.0" y="128" width="414" height="513"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="100" id="rgC-rk-ZgJ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Item" rowHeight="100" id="rgC-rk-ZgJ" customClass="ItemCell" customModule="Receipts_Store" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rgC-rk-ZgJ" id="ov2-2t-JsJ">
@@ -309,6 +310,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="Text Field"/>
+                                        <connections>
+                                            <outlet property="name" destination="srR-LM-DeP" id="osP-kA-jXz"/>
+                                            <outlet property="price" destination="PGq-Es-AgL" id="xZ7-fj-nn7"/>
+                                            <outlet property="quantity" destination="qHL-QX-NdG" id="v4L-S2-V0j"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -367,6 +373,15 @@
                                             <segue destination="ZZe-YO-a2U" kind="presentation" identifier="Add Item" id="pUS-0v-Bue"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1O-46-zP3">
+                                        <rect key="frame" x="20" y="120" width="44.5" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="KyX-ae-TFE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                        <color key="textColor" name="Text"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AMr-d1-cLy" customClass="RoundButton" customModule="Receipts_Store" customModuleProvider="target">
                                         <rect key="frame" x="240" y="16" width="150" height="75"/>
                                         <color key="backgroundColor" name="Confirm"/>
@@ -388,15 +403,6 @@
                                             <segue destination="5Pf-2e-Op3" kind="show" id="XNc-Wh-9KZ"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1O-46-zP3">
-                                        <rect key="frame" x="20" y="120" width="44.5" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="KyX-ae-TFE"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                        <color key="textColor" name="Text"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" name="Primary Accent"/>
                                 <constraints>
@@ -841,9 +847,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="75F-ww-FHa">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="75F-ww-FHa" customClass="ScannerView" customModule="Receipts_Store" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="559"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aXc-5i-Eby" customClass="RoundButton" customModule="Receipts_Store" customModuleProvider="target">
+                                        <rect key="frame" x="334" y="20" width="60" height="60"/>
+                                        <color key="backgroundColor" name="Secondary Accent"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="3Xe-QF-0D8"/>
+                                            <constraint firstAttribute="width" constant="60" id="iys-bo-orW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="tintColor" name="Text"/>
+                                        <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                        <state key="normal" image="bolt.fill" catalog="system">
+                                            <color key="titleColor" name="Text"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="30"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="flashToggled:" destination="ZZe-YO-a2U" eventType="touchUpInside" id="ZLa-q6-Goq"/>
+                                            <action selector="flashToggled:" destination="ocN-rR-dvy" eventType="touchUpInside" id="kPV-ug-U83"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" name="Text Field"/>
+                                <constraints>
+                                    <constraint firstItem="aXc-5i-Eby" firstAttribute="top" secondItem="75F-ww-FHa" secondAttribute="top" constant="20" id="asx-La-3Qy"/>
+                                    <constraint firstAttribute="trailing" secondItem="aXc-5i-Eby" secondAttribute="trailing" constant="20" id="bxo-5l-oOO"/>
+                                </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please position the user's QR code in the frame above" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vY8-vJ-0lf" customClass="RoundLabel" customModule="Receipts_Store" customModuleProvider="target">
                                 <rect key="frame" x="60" y="671" width="294" height="100"/>
@@ -876,8 +911,9 @@
                     <navigationItem key="navigationItem" title="Checkout" id="ucy-fz-oo6"/>
                     <connections>
                         <outlet property="camera" destination="75F-ww-FHa" id="wrI-Oc-vUq"/>
+                        <outlet property="flash" destination="aXc-5i-Eby" id="Pz7-ho-7WW"/>
                         <outlet property="instructions" destination="vY8-vJ-0lf" id="bmS-1H-pxm"/>
-                        <segue destination="oq6-8J-zzD" kind="presentation" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="3Mh-ta-9vF"/>
+                        <segue destination="oq6-8J-zzD" kind="presentation" identifier="Sale Complete" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="3Mh-ta-9vF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="heP-oc-Ms2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1293,7 +1329,7 @@
             <color red="0.0" green="0.49000000953674316" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Secondary Text">
-            <color red="0.74599999189376831" green="0.8059999942779541" blue="0.83399999141693115" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.74599999189999999" green="0.80599999430000002" blue="0.83399999140000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Text">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1302,4 +1338,5 @@
             <color red="0.10499999672174454" green="0.11900000274181366" blue="0.14900000393390656" alpha="0.69999998807907104" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
+    <color key="tintColor" name="Secondary Accent"/>
 </document>

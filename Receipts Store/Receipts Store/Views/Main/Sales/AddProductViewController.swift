@@ -12,48 +12,22 @@ import AVKit
 class AddProductViewController: UIViewController {
 	
 	// MARK: IBOutlets
+	@IBOutlet weak var camera: ScannerView!
 	@IBOutlet weak var flash: RoundButton!
 	@IBOutlet weak var instructions: UILabel!
+	
+	// MARK: Camera Variables
+	var captureSession: AVCaptureSession!
+	var stillImageOutput: AVCapturePhotoOutput!
+	var videoPreviewLayer: AVCaptureVideoPreviewLayer!
 	
 	// MARK: Variables
 	var flashIsOn: Bool = false
 	
 	// MARK: View Controller Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-		
-		self.setupView()
-    }
-	
-	// MARK: Methods
-	private func setupView() {
-		
+	override func viewDidLoad() {
+		super.viewDidLoad()
 	}
-	
-	private func toggleFlash() {
-		guard let device = AVCaptureDevice.default(for: .video) else { return }
-		guard device.hasTorch else { print("Device doesn't have flash."); return }
-		
-		do {
-			try device.lockForConfiguration()
-			
-			if self.flashIsOn {
-				try device.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
-				self.flash.imageView!.image = UIImage(systemName: "bolt")
-			} else {
-				try device.setTorchModeOn(level: 0)
-				self.flash.imageView!.image = UIImage(systemName: "bolt.fill")
-			}
-			
-			self.flashIsOn = !self.flashIsOn
-			device.unlockForConfiguration()
-		} catch {
-			print("Flash not usable.")
-		}
-	}
-	
-	// MARK: Navigation
 	
 	// MARK: IBActions
 	@IBAction func dismissTapped(_ sender: RoundButton) {
@@ -61,7 +35,40 @@ class AddProductViewController: UIViewController {
 	}
 	
 	@IBAction func flashToggled(_ sender: RoundButton) {
-		self.toggleFlash()
+		self.camera.toggleFlash()
 	}
 
+}
+
+extension AddProductViewController: ScannerViewDelegate {
+	
+	func didScanBarcode(_ code: String) {
+		print("Scanned Code: \(code)")
+		
+		Sale.current.lookupItem(from: code) { (matchedItem) in
+			if let item = matchedItem {
+				Sale.current.addItem(item)
+			} else {
+				fatalError()
+				// Ask user to setup product
+			}
+		}
+	}
+	
+	func scanningDidFail() {
+		self.dismiss(animated: true, completion: nil)
+	}
+	
+	func scanningDidStop() {
+		self.dismiss(animated: true, completion: nil)
+	}
+	
+	func flashDidChange(to state: Bool) {
+		if state {
+			self.flash.imageView!.image = UIImage(systemName: "bolt.fill")
+		} else {
+			self.flash.imageView!.image = UIImage(systemName: "bolt")
+		}
+	}
+	
 }

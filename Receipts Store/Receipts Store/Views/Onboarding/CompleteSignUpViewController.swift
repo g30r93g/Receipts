@@ -17,7 +17,7 @@ class CompleteSignUpViewController: UIViewController {
 	
 	// MARK: Variables
 	var lastSentDate: Date = Date()
-	var alreadyVerified: Bool = false
+	var cameFromSignIn: Bool = false
 	
 	// MARK: View Controller Life Cycle
 	override func viewDidAppear(_ animated: Bool) {
@@ -28,17 +28,18 @@ class CompleteSignUpViewController: UIViewController {
 	
 	// MARK: Methods
 	private func sendVerificationEmail() {
+		if self.openMail == nil { return } // This is to mitigate when this view controller is initialised again after segueing
+		
 		self.startLoading()
 		
-		if self.alreadyVerified { return }
 		Authentication.account.sendEmailVerification { (success) in
-			if self.alreadyVerified { return }
 			if success {
 				print("Verified user's email!")
 				self.stopLoading()
-				self.alreadyVerified = true
-
-				if !self.alreadyVerified {
+				
+				if self.cameFromSignIn {
+					self.performSegue(withIdentifier: "Complete Sign Up", sender: nil)
+				} else {
 					self.performSegue(withIdentifier: "Upload Logo", sender: nil)
 				}
 			} else {

@@ -18,6 +18,7 @@ class SaleCompleteViewController: UIViewController {
 	@IBOutlet weak var viewReceipt: RoundButton!
 	
 	// MARK: Variables
+	var userIdentifier: String!
 	
 	// MARK: View Controller Life Cycle
     override func viewDidLoad() {
@@ -29,11 +30,8 @@ class SaleCompleteViewController: UIViewController {
     
 	// MARK: Methods
 	private func setupView() {
-		
+		self.userID.text = "User ID: \(self.userIdentifier!)"
+		self.receiptID.text = "Receipt ID: \(Sale.current.receipt.identifier)"
 	}
-	
-	// MARK: Navigation
-	
-	// MARK: IBActions
 
 }

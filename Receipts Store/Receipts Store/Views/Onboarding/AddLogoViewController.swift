@@ -12,6 +12,8 @@ class AddLogoViewController: UIViewController {
 	
 	// MARK: IBOutlets
 	@IBOutlet weak var logo: RoundImageView!
+	@IBOutlet weak var upload: RoundButton!
+	@IBOutlet weak var uploadIndicator: UIActivityIndicatorView!
 	
 	// MARK: Variables
 	let imagePickerController = UIImagePickerController()
@@ -21,26 +23,47 @@ class AddLogoViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 		
-		let tapGestureRecogniser = UITapGestureRecognizer(target: self, action: #selector(selectImage(recogniser:)))
-		tapGestureRecogniser.numberOfTapsRequired = 1
-		tapGestureRecogniser.numberOfTouchesRequired = 1
-		self.logo.addGestureRecognizer(tapGestureRecogniser)
-		
 		self.imagePickerController.delegate = self
+		
+		self.upload.setTitle("Select", for: .normal)
     }
 	
-	// MARK: IBActions
-	@IBAction func continueTapped(_ sender: RoundButton) {
-		
-		self.performSegue(withIdentifier: "", sender: self)
+	// MARK: Methods
+	private func startLoading() {
+		self.uploadIndicator.startAnimating()
 	}
-
+	
+	private func stopLoading() {
+		self.uploadIndicator.stopAnimating()
+	}
+	
+	// MARK: Navigation
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "Complete Sign Up" {
+			Authentication.account.uploadLogo(storeLogo: self.logo.image!) { (success) in
+				if success {
+//					segue.perform()
+				} else {
+					fatalError("Couldn't upload logo.")
+				}
+			}
+		}
+	}
+	
+	// MARK: IBActions
+	@IBAction func uploadTapped(_ sender: RoundButton) {
+		if self.logo.image == nil {
+			self.selectImage()
+		} else {
+			self.performSegue(withIdentifier: "Complete Sign Up", sender: nil)
+		}
+	}
 }
 
 extension AddLogoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
 	// MARK: Image Selection Methods
-	@objc private func selectImage(recogniser: UIGestureRecognizer) {
+	private func selectImage() {
 		self.imagePickerController.allowsEditing = true
 		self.imagePickerController.sourceType = .photoLibrary
 		
@@ -52,6 +75,8 @@ extension AddLogoViewController: UIImagePickerControllerDelegate, UINavigationCo
 		if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
 			self.logo.contentMode = .scaleAspectFit
             self.logo.image = pickedImage
+			
+			self.upload.setTitle("Upload", for: .normal)
         }
         
         dismiss(animated: true, completion: nil)

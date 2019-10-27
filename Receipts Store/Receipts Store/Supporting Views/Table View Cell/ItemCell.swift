@@ -16,7 +16,7 @@ class ItemCell: UITableViewCell {
 	@IBOutlet weak var price: RoundLabel!
 	
 	// MARK: Methods
-	func setupCell(from data: Receipts.Item) {
+	func setupCell(from data: Sale.Item) {
 		self.name.text = data.name
 		self.quantity.text = "Quantity: \(data.quantity)"
 		self.price.text = "£\(String(format: "%.2f", data.price))"

@@ -73,6 +73,14 @@ class SignInViewController: UIViewController {
 		self.signInIndicator.stopAnimating()
 	}
 	
+	// MARK: Navigation
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "Verify Email" {
+			let destVC = segue.destination as! CompleteSignUpViewController
+			destVC.cameFromSignIn = true
+		}
+	}
+	
 	// MARK: IBActions
 	@IBAction func signInTapped(_ sender: UIButton) {
 		self.signIn()

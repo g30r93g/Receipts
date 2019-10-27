@@ -7,7 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BCF0969E-C67A-490F-996D-1062C385B159"
+            uuid = "6B0D0DF7-90AE-402B-8900-773B798F2236"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -16,11 +16,11 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "34"
             endingLineNumber = "34"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "sendVerificationEmail()"
+            landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BCF0969E-C67A-490F-996D-1062C385B159 - deb2006b153d99e6"
+                  uuid = "6B0D0DF7-90AE-402B-8900-773B798F2236 - deb2006b153d99e6"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -30,12 +30,12 @@
                   urlString = "file:///Users/g30r93g/Local%20Documents/GitHub/Receipts/Receipts%20Store/Receipts%20Store/Views/Onboarding/CompleteSignUpViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "86">
+                  startingLineNumber = "35"
+                  endingLineNumber = "35"
+                  offsetFromSymbolStart = "204">
                </Location>
                <Location
-                  uuid = "BCF0969E-C67A-490F-996D-1062C385B159 - b195feadabc4b187"
+                  uuid = "6B0D0DF7-90AE-402B-8900-773B798F2236 - b195feadabc4b187"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,11 +45,27 @@
                   urlString = "file:///Users/g30r93g/Local%20Documents/GitHub/Receipts/Receipts%20Store/Receipts%20Store/Views/Onboarding/CompleteSignUpViewController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "35"
-                  endingLineNumber = "35"
-                  offsetFromSymbolStart = "99">
+                  startingLineNumber = "36"
+                  endingLineNumber = "36"
+                  offsetFromSymbolStart = "100">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D7EB5805-3552-4A0F-8333-5BAFF200EAC3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Receipts Store/Views/Main/Account/SettingsViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "setupView()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
