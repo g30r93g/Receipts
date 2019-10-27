@@ -12,16 +12,24 @@
 		1F799DCC231001A700BD9166 /* CompleteSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */; };
 		1F799DCF231001A700BD9166 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DC7231001A700BD9166 /* SignInViewController.swift */; };
 		1F799DD2231005CB00BD9166 /* AddLogoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DD1231005CB00BD9166 /* AddLogoViewController.swift */; };
+		1FBEB9DE23650CC300C92ACD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FBEB9DC23650CC300C92ACD /* Main.storyboard */; };
+		1FBEB9E32365186800C92ACD /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E22365186800C92ACD /* SettingsViewController.swift */; };
+		1FBEB9E52365187900C92ACD /* ReceiptsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E42365187900C92ACD /* ReceiptsViewController.swift */; };
+		1FBEB9E72365188A00C92ACD /* SalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E62365188A00C92ACD /* SalesViewController.swift */; };
+		1FBEB9E92365189300C92ACD /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E82365189300C92ACD /* AddProductViewController.swift */; };
+		1FBEB9EB2365189E00C92ACD /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9EA2365189E00C92ACD /* PaymentViewController.swift */; };
+		1FBEB9ED236518AE00C92ACD /* UserCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9EC236518AE00C92ACD /* UserCodeViewController.swift */; };
+		1FBEB9EF236518B700C92ACD /* SaleCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9EE236518B700C92ACD /* SaleCompleteViewController.swift */; };
+		1FBEB9F12365238C00C92ACD /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9F02365238C00C92ACD /* ItemCell.swift */; };
+		1FBEB9F32365245D00C92ACD /* ReceiptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9F22365245D00C92ACD /* ReceiptCell.swift */; };
 		1FDD916A230FF81C008EE678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD9169230FF81C008EE678 /* AppDelegate.swift */; };
 		1FDD916C230FF81C008EE678 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD916B230FF81C008EE678 /* SceneDelegate.swift */; };
-		1FDD9171230FF81C008EE678 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD916F230FF81C008EE678 /* Main.storyboard */; };
 		1FDD9174230FF81C008EE678 /* Receipts_Store.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD9172230FF81C008EE678 /* Receipts_Store.xcdatamodeld */; };
 		1FDD9176230FF81D008EE678 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD9175230FF81D008EE678 /* Assets.xcassets */; };
 		1FDD9179230FF81D008EE678 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD9177230FF81D008EE678 /* LaunchScreen.storyboard */; };
 		1FDD9184230FF81D008EE678 /* Receipts_StoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD9183230FF81D008EE678 /* Receipts_StoreTests.swift */; };
 		1FDD918F230FF81D008EE678 /* Receipts_StoreUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD918E230FF81D008EE678 /* Receipts_StoreUITests.swift */; };
 		1FDD919D230FF8CA008EE678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1FDD919C230FF8CA008EE678 /* GoogleService-Info.plist */; };
-		1FDD91A5230FF920008EE678 /* BorderedTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */; };
 		1FDD91A7230FF920008EE678 /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A2230FF920008EE678 /* Round.swift */; };
 		1FDD91A8230FF920008EE678 /* Image Text Field.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A3230FF920008EE678 /* Image Text Field.swift */; };
 		1FDD91A9230FF920008EE678 /* Gradient Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD91A4230FF920008EE678 /* Gradient Background.swift */; };
@@ -56,10 +64,19 @@
 		1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteSignUpViewController.swift; sourceTree = "<group>"; };
 		1F799DC7231001A700BD9166 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		1F799DD1231005CB00BD9166 /* AddLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLogoViewController.swift; sourceTree = "<group>"; };
+		1FBEB9DD23650CC300C92ACD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1FBEB9E22365186800C92ACD /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		1FBEB9E42365187900C92ACD /* ReceiptsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewController.swift; sourceTree = "<group>"; };
+		1FBEB9E62365188A00C92ACD /* SalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesViewController.swift; sourceTree = "<group>"; };
+		1FBEB9E82365189300C92ACD /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
+		1FBEB9EA2365189E00C92ACD /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		1FBEB9EC236518AE00C92ACD /* UserCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCodeViewController.swift; sourceTree = "<group>"; };
+		1FBEB9EE236518B700C92ACD /* SaleCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleCompleteViewController.swift; sourceTree = "<group>"; };
+		1FBEB9F02365238C00C92ACD /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		1FBEB9F22365245D00C92ACD /* ReceiptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptCell.swift; sourceTree = "<group>"; };
 		1FDD9166230FF81C008EE678 /* Receipts Store.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Receipts Store.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FDD9169230FF81C008EE678 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FDD916B230FF81C008EE678 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1FDD9170230FF81C008EE678 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1FDD9173230FF81C008EE678 /* Receipts_Store.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Receipts_Store.xcdatamodel; sourceTree = "<group>"; };
 		1FDD9175230FF81D008EE678 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FDD9178230FF81D008EE678 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -71,7 +88,6 @@
 		1FDD918E230FF81D008EE678 /* Receipts_StoreUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipts_StoreUITests.swift; sourceTree = "<group>"; };
 		1FDD9190230FF81D008EE678 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FDD919C230FF8CA008EE678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedTableCell.swift; sourceTree = "<group>"; };
 		1FDD91A2230FF920008EE678 /* Round.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
 		1FDD91A3230FF920008EE678 /* Image Text Field.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Image Text Field.swift"; sourceTree = "<group>"; };
 		1FDD91A4230FF920008EE678 /* Gradient Background.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Gradient Background.swift"; sourceTree = "<group>"; };
@@ -126,7 +142,10 @@
 		1F799DD0231001AA00BD9166 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				1FDD916F230FF81C008EE678 /* Main.storyboard */,
+				1FBEB9DC23650CC300C92ACD /* Main.storyboard */,
+				1FBEB9DF2365182000C92ACD /* Sales */,
+				1FBEB9E02365183E00C92ACD /* Receipts */,
+				1FBEB9E12365184800C92ACD /* Account */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -134,9 +153,38 @@
 		1FA5BF962363A0E90005BFAB /* Table View Cell */ = {
 			isa = PBXGroup;
 			children = (
-				1FDD91A0230FF920008EE678 /* BorderedTableCell.swift */,
+				1FBEB9F02365238C00C92ACD /* ItemCell.swift */,
+				1FBEB9F22365245D00C92ACD /* ReceiptCell.swift */,
 			);
 			path = "Table View Cell";
+			sourceTree = "<group>";
+		};
+		1FBEB9DF2365182000C92ACD /* Sales */ = {
+			isa = PBXGroup;
+			children = (
+				1FBEB9E62365188A00C92ACD /* SalesViewController.swift */,
+				1FBEB9E82365189300C92ACD /* AddProductViewController.swift */,
+				1FBEB9EA2365189E00C92ACD /* PaymentViewController.swift */,
+				1FBEB9EC236518AE00C92ACD /* UserCodeViewController.swift */,
+				1FBEB9EE236518B700C92ACD /* SaleCompleteViewController.swift */,
+			);
+			path = Sales;
+			sourceTree = "<group>";
+		};
+		1FBEB9E02365183E00C92ACD /* Receipts */ = {
+			isa = PBXGroup;
+			children = (
+				1FBEB9E42365187900C92ACD /* ReceiptsViewController.swift */,
+			);
+			path = Receipts;
+			sourceTree = "<group>";
+		};
+		1FBEB9E12365184800C92ACD /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				1FBEB9E22365186800C92ACD /* SettingsViewController.swift */,
+			);
+			path = Account;
 			sourceTree = "<group>";
 		};
 		1FDD915D230FF81C008EE678 = {
@@ -368,10 +416,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FDD9179230FF81D008EE678 /* LaunchScreen.storyboard in Resources */,
+				1FBEB9DE23650CC300C92ACD /* Main.storyboard in Resources */,
 				1FDD919D230FF8CA008EE678 /* GoogleService-Info.plist in Resources */,
 				1F799DCA231001A700BD9166 /* Onboarding.storyboard in Resources */,
 				1FDD9176230FF81D008EE678 /* Assets.xcassets in Resources */,
-				1FDD9171230FF81C008EE678 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,18 +486,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FBEB9EF236518B700C92ACD /* SaleCompleteViewController.swift in Sources */,
 				1FDD916A230FF81C008EE678 /* AppDelegate.swift in Sources */,
-				1FDD91A5230FF920008EE678 /* BorderedTableCell.swift in Sources */,
+				1FBEB9E52365187900C92ACD /* ReceiptsViewController.swift in Sources */,
+				1FBEB9E92365189300C92ACD /* AddProductViewController.swift in Sources */,
+				1FBEB9ED236518AE00C92ACD /* UserCodeViewController.swift in Sources */,
+				1FBEB9E72365188A00C92ACD /* SalesViewController.swift in Sources */,
 				1FDD91A9230FF920008EE678 /* Gradient Background.swift in Sources */,
 				1FDD91B0230FF928008EE678 /* Authentication.swift in Sources */,
+				1FBEB9F32365245D00C92ACD /* ReceiptCell.swift in Sources */,
+				1FBEB9EB2365189E00C92ACD /* PaymentViewController.swift in Sources */,
 				1F799DD2231005CB00BD9166 /* AddLogoViewController.swift in Sources */,
 				1FDD91B9230FF92C008EE678 /* Calendar.swift in Sources */,
 				1FDD91B8230FF92C008EE678 /* String.swift in Sources */,
 				1F799DCF231001A700BD9166 /* SignInViewController.swift in Sources */,
 				1FDD9174230FF81C008EE678 /* Receipts_Store.xcdatamodeld in Sources */,
 				1F799DCC231001A700BD9166 /* CompleteSignUpViewController.swift in Sources */,
+				1FBEB9F12365238C00C92ACD /* ItemCell.swift in Sources */,
 				1F799DC8231001A700BD9166 /* SignUpViewController.swift in Sources */,
 				1FDD91A7230FF920008EE678 /* Round.swift in Sources */,
+				1FBEB9E32365186800C92ACD /* SettingsViewController.swift in Sources */,
 				1FDD91AF230FF928008EE678 /* Receipts.swift in Sources */,
 				1FDD91A8230FF920008EE678 /* Image Text Field.swift in Sources */,
 				1FDD916C230FF81C008EE678 /* SceneDelegate.swift in Sources */,
@@ -489,10 +545,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1FDD916F230FF81C008EE678 /* Main.storyboard */ = {
+		1FBEB9DC23650CC300C92ACD /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				1FDD9170230FF81C008EE678 /* Base */,
+				1FBEB9DD23650CC300C92ACD /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

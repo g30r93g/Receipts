@@ -1,97 +1,54 @@
 //
-//  AccountViewController.swift
+//  SettingsViewController.swift
 //  Receipts Store
 //
-//  Created by George Nick Gorzynski on 19/08/2019.
+//  Created by George Nick Gorzynski on 27/10/2019.
 //  Copyright © 2019 g30r93g. All rights reserved.
 //
 
 import UIKit
 
-class AccountViewController: UITableViewController {
+class SettingsViewController: UITableViewController {
 	
 	// MARK: IBOutlets
-	@IBOutlet weak var userImage: RoundImageView!
-	@IBOutlet weak var userName: UILabel!
-	@IBOutlet weak var userEmail: UILabel!
-	@IBOutlet weak var userPhoneNumber: UILabel!
-	@IBOutlet weak var authenticateOnLaunchToggle: UISwitch!
-	@IBOutlet weak var pushNotificationToggle: UISwitch!
-	@IBOutlet weak var emailNotificationToggle: UISwitch!
+	@IBOutlet weak var storeIcon: RoundImageView!
+	@IBOutlet weak var storeName: UILabel!
+	@IBOutlet weak var storeEmail: UILabel!
+	@IBOutlet weak var storePhoneNumber: UILabel!
+	
+	@IBOutlet weak var biometricAuthentication: UISwitch!
+	
+	// MARK: Variables
 	
 	// MARK: View Controller Life Cycle
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		// Do any additional setup after loading the view.
+    override func viewDidLoad() {
+        super.viewDidLoad()
 		
-		self.loadUserDetails()
-		self.loadUserDefaults()
+		self.setupView()
 	}
 	
 	// MARK: Methods
-	private func loadUserDetails() {
-		Authentication.account.getUserInfo(type: .name) { (name) in
-			self.userName.text = name
-		}
+	private func setupView() {
 		
-		Authentication.account.getUserInfo(type: .email) { (email) in
-			self.userEmail.text = email
-		}
-		
-		Authentication.account.getUserInfo(type: .phoneNumber) { (number) in
-			self.userPhoneNumber.text = number.addSpace(at: 4).addCountryCode("+44 ", at: 0)
-		}
-	}
-	
-	private func loadUserDefaults() {
-		let authenticateOnLaunch = UserDefaults.standard.bool(forKey: "Authenticate On Launch")
-		let pushNotification = UserDefaults.standard.bool(forKey: "Push Notifications")
-		let emailNotification = UserDefaults.standard.bool(forKey: "Email Notifications")
-		
-		self.authenticateOnLaunchToggle.setOn(authenticateOnLaunch, animated: true)
-		self.pushNotificationToggle.setOn(pushNotification, animated: true)
-		self.emailNotificationToggle.setOn(emailNotification, animated: true)
-	}
-	
-	private func updatePrefs() {
-		Authentication.account.updateUserPrefs(prefs: ["pushNotifs" : self.pushNotificationToggle.isOn, "emailNotifs" : self.emailNotificationToggle.isOn]) { (success) in
-			if success {
-				print("Updated")
-			} else {
-				fatalError()
-			}
-		}
 	}
 	
 	private func showConfirmationAlert(text: String) {
 		let alert = UIAlertController(title: text, message: nil, preferredStyle: .alert)
 		
-		alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+		alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
 		
 		self.present(alert, animated: true, completion: nil)
 	}
 	
 	// MARK: IBActions
-	@IBAction func authenticateOnLaunchToggled(_ sender: UISwitch) {
-		UserDefaults.standard.set(sender.isOn, forKey: "Authenticate On Launch")
+	@IBAction func biometrticAuthenticationToggled(_ sender: UISwitch) {
+		
 	}
 	
-	@IBAction func pushNotificationToggled(_ sender: UISwitch) {
-		UserDefaults.standard.set(sender.isOn, forKey: "Push Notifications")
-		
-		self.updatePrefs()
-	}
-	
-	@IBAction func emailNotificationToggled(_ sender: UISwitch) {
-		UserDefaults.standard.set(sender.isOn, forKey: "Email Notifications")
-		
-		self.updatePrefs()
-	}
-
 }
 
 // MARK: Table View Methods
-extension AccountViewController {
+extension SettingsViewController {
 	
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		self.tableView.deselectRow(at: indexPath, animated: true)
@@ -99,7 +56,7 @@ extension AccountViewController {
 		switch indexPath.section {
 		case 0:
 			switch indexPath.row {
-			case 1:
+			case 0:
 				// Change Password
 				let alert = UIAlertController(title: "Change Password", message: nil, preferredStyle: .alert)
 				
@@ -134,7 +91,7 @@ extension AccountViewController {
 				}))
 				
 				self.present(alert, animated: true, completion: nil)
-			case 2:
+			case 1:
 				// Update Phone Number
 				let alert = UIAlertController(title: "Update Phone Number", message: nil, preferredStyle: .alert)
 				
@@ -160,17 +117,19 @@ extension AccountViewController {
 				}))
 				
 				self.present(alert, animated: true, completion: nil)
+			case 2:
+				// Update Store Name
+				break
+			case 3:
+				// Update Store Logo
+				break
 			default:
 				break
 			}
 		case 1:
 			switch indexPath.row {
 			case 0:
-				self.authenticateOnLaunchToggle.setOn(!self.authenticateOnLaunchToggle.isOn, animated: true)
-			case 1:
-				self.pushNotificationToggle.setOn(!self.pushNotificationToggle.isOn, animated: true)
-			case 2:
-				self.emailNotificationToggle.setOn(!self.emailNotificationToggle.isOn, animated: true)
+				self.biometricAuthentication.setOn(!self.biometricAuthentication.isOn, animated: true)
 			default:
 				break
 			}
