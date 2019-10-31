@@ -52,11 +52,7 @@ class Authentication {
 		guard let user = self.auth.currentUser else { return false }
 		user.reload()
 		
-		if self.isSignedIn {
-			return self.auth.currentUser!.isEmailVerified
-		} else {
-			return false
-		}
+		return self.auth.currentUser?.isEmailVerified ?? false
 	}
 	
 	// MARK: Auth Methods
@@ -111,7 +107,7 @@ class Authentication {
 	func signUp(name: String, email: String, password: String, phoneNumber: String, completion: @escaping(Bool) -> Void) {
 		self.auth.createUser(withEmail: email, password: password) { (result, error) in
 			if let error = error {
-				fatalError("\(error)")
+				print("\(error)")
 				completion(false)
 			} else {
 				self.auth.currentUser!.createProfileChangeRequest().displayName = name
@@ -132,8 +128,8 @@ class Authentication {
             print("Debug: User signed out successfully with no errors.")
             
             completion(true)
-        } catch let error as NSError {
-            fatalError("\(error)")
+        } catch let error {
+			print("\(error)")
             completion(false)
         }
     }
@@ -143,16 +139,9 @@ class Authentication {
 		if self.isSignedIn {
 			let credential = EmailAuthProvider.credential(withEmail: self.auth.currentUser!.email!, password: oldPassword)
 			self.auth.currentUser!.reauthenticateAndRetrieveData(with: credential) { (result, error) in
-				if error != nil {
-					completion(false)
-				} else if result != nil {
-					completion(true)
-				} else {
-					completion(false)
-				}
+				completion(error == nil && result != nil)
 			}
 		} else {
-			fatalError()
 			completion(false)
 		}
 	}
@@ -161,11 +150,10 @@ class Authentication {
     func sendPasswordReset(email: String, completion: @escaping(Bool) -> Void) {
 		self.auth.sendPasswordReset(withEmail: email) { (error) in
 			if let error = error {
-				fatalError("\(error)")
-				completion(false)
-			} else {
-				completion(true)
+				print("\(error)")
 			}
+			
+			completion(error != nil)
         }
     }
 	
@@ -174,11 +162,11 @@ class Authentication {
 		self.reauthenticate(oldPassword: oldPassword) { (success) in
 			if success {
 				self.auth.currentUser!.updatePassword(to: newPassword) { (error) in
-					if let _ = error {
-						completion(false)
-					} else {
-						completion(true)
-					}
+				if let error = error {
+					print("\(error)")
+				}
+				
+				completion(error != nil)
 				}
 			} else {
 				completion(false)
@@ -189,18 +177,16 @@ class Authentication {
 	/// Sends a code to update a password
 	func updatePhoneNumber(newNumber: String, completion: @escaping(Bool) -> Void) {
 		if self.isSignedIn {
-			guard let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier) else { return }
+			let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier)
 			
-			userDocument.setData(["phoneNumber" : newNumber], merge: true) { (error) in
+			userDocument.updateData(["phoneNumber" : newNumber]) { (error) in
 				if let error = error {
-					fatalError("\(error)")
-					completion(false)
-				} else {
-					completion(true)
+					print("\(error)")
 				}
+				
+				completion(error != nil)
 			}
 		} else {
-			fatalError()
 			completion(false)
 		}
 	}
@@ -218,7 +204,6 @@ class Authentication {
 				}
 			}
 		} else {
-			fatalError("User isn't signed in, therefore couldn't send verification.")
 			completion(false)
 		}
     }
@@ -244,16 +229,14 @@ class Authentication {
 	
 	/// Stores user's details
 	func uploadStoreDetails(name: String, email: String, phoneNumber: String, completion: @escaping(Bool) -> Void) {
-		guard let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier) else { completion(false); return }
+		let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier)
 		
-		userDocument.setData(["storeName": name, "email": email, "phoneNumber": phoneNumber, "receipts": [], "newReceipts": [], "prefs" : ["pushNotifs": true, "emailNotifs": false]], merge: false) { (error) in
+		userDocument.setData(["storeName": name, "email": email, "phoneNumber": phoneNumber, "receipts": [], "newReceipts": []]) { (error) in
 			if let error = error {
-				fatalError("\(error)")
-				completion(false)
-				return
-			} else {
-				completion(true)
+				print("\(error)")
 			}
+			
+			completion(error != nil)
 		}
 	}
 	
@@ -264,7 +247,7 @@ class Authentication {
 			
 			storeDocument.getDocument { (document, error) in
 				if let error = error {
-					fatalError("\(error)")
+					print("\(error)")
 					return
 				} else if let document = document {
 					let storeName: String = document.get("storeName") as! String
@@ -281,8 +264,12 @@ class Authentication {
 		}
 	}
 	
+	func checkUserExists(for code: String, completion: @escaping(Bool) -> Void) {
+		completion(true)
+	}
+	
 	func uploadLogo(storeLogo: UIImage, completion: @escaping(Bool) -> Void) {
-		guard let image = storeLogo.pngData() else { fatalError(); completion(false) }
+		guard let image = storeLogo.pngData() else { completion(false); return }
 		
 		let imageStorage = self.storage.reference(withPath: "Store_Logos").child("\(self.uniqueIdentifier).png")
 		let imageMetadata = StorageMetadata()
@@ -290,7 +277,7 @@ class Authentication {
 		
 		imageStorage.putData(image, metadata: imageMetadata) { (metadata, error) in
 			if let error = error {
-				fatalError("\(error)")
+				print("\(error)")
 				completion(false)
 			} else {
 				self.storeDetails.addLogo(storeLogo)
@@ -313,6 +300,18 @@ class Authentication {
 					completion(UIImage())
 				}
 			}
+		}
+	}
+	
+	func updateStoreName(newName: String, completion: @escaping(Bool) -> Void) {
+		let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier)
+		
+		userDocument.updateData(["storeName" : newName]) { (error) in
+		if let error = error {
+			print("\(error)")
+		}
+		
+		completion(error != nil)
 		}
 	}
 	

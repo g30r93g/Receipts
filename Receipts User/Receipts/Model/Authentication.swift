@@ -28,11 +28,7 @@ class Authentication {
 	
 	// MARK: Auth Data Variables
 	var uniqueIdentifier: String {
-		if self.isSignedIn {
-			return self.auth.currentUser!.uid
-		} else {
-			return ""
-		}
+		return self.auth.currentUser?.uid ?? ""
 	}
 	
 	var isSignedIn: Bool {
@@ -41,11 +37,10 @@ class Authentication {
 	
 	/// Determines if the user is verified
 	var isVerified: Bool {
-		if self.isSignedIn {
-			return self.auth.currentUser!.isEmailVerified
-		} else {
-			return false
-		}
+		guard let user = self.auth.currentUser else { return false }
+		user.reload()
+		
+		return self.auth.currentUser?.isEmailVerified ?? false
 	}
 	
 	// MARK: Auth Methods
@@ -117,7 +112,7 @@ class Authentication {
             print("Debug: User signed out successfully with no errors.")
             
             completion(true)
-        } catch let error as NSError {
+        } catch let error {
             fatalError("\(error)")
             completion(false)
         }
@@ -174,7 +169,7 @@ class Authentication {
 	/// Sends a code to update a password
 	func updatePhoneNumber(newNumber: String, completion: @escaping(Bool) -> Void) {
 		if self.isSignedIn {
-			guard let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier) else { return }
+			let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 			
 			userDocument.setData(["phoneNumber" : newNumber], merge: true) { (error) in
 				if let error = error {
@@ -194,18 +189,29 @@ class Authentication {
 	func sendEmailVerification(completion: @escaping(Bool) -> Void) {
 		if self.isSignedIn {
 			self.auth.currentUser!.sendEmailVerification { (error) in
-				if let error = error {
-					fatalError("\(error)")
+				if error != nil {
 					completion(false)
 				} else {
-					completion(true)
+					self.monitorVerifiedStatus { (verified) in
+						completion(verified)
+					}
 				}
 			}
 		} else {
-			fatalError("User isn't signed in, therefore couldn't send verification.")
 			completion(false)
 		}
     }
+	
+	private func monitorVerifiedStatus(completion: @escaping(Bool) -> Void) {
+		Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
+			print("User verification is \(self.isVerified)")
+			
+			if self.isVerified {
+				timer.invalidate()
+				completion(true)
+			}
+		}.fire()
+	}
 	
 	// MARK: Firestore Variables
 	var data = Firestore.firestore()
@@ -213,7 +219,7 @@ class Authentication {
 	// MARK: Firestore Methods
 	/// Stores user's details
     func storeUserDetails(name: String, email: String, phoneNumber: String, completion: @escaping(Bool) -> Void) {
-		guard let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier) else { completion(false); return }
+		let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 		
 		userDocument.setData(["name": name, "email": email, "phoneNumber": phoneNumber, "receipts": [], "newReceipts": [], "prefs" : ["pushNotifs": true, "emailNotifs": false]], merge: false) { (error) in
 			if let error = error {
@@ -228,7 +234,7 @@ class Authentication {
 	
 	// Update User Prefs
 	func updateUserPrefs(prefs: [String : Bool], completion: @escaping(Bool) -> Void) {
-		guard let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier) else { completion(false); return }
+		let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 		
 		userDocument.setData(["prefs" : prefs], merge: true) { (error) in
 			if let error = error {
@@ -243,7 +249,7 @@ class Authentication {
 	// Get's user information
 	func getUserInfo(type: UserDetails, completion: @escaping(String) -> Void) {
 		if self.isSignedIn {
-			guard let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier) else { return }
+			let userDocument: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 			
 			switch type {
 			case .name:

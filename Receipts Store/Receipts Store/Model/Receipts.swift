@@ -29,9 +29,17 @@ class Receipts {
 	}
 	
 	struct StoreDetails {
-		let uid: String
+		let uuid: String
 		let name: String
 		let location: GeoPoint
+		
+		func toAnyObject() -> Any {
+			return [
+				"uuid" : uuid,
+				"name" : name,
+				"location" : location
+			]
+		}
 	}
 	
 	struct ReceiptDetails {
@@ -42,13 +50,32 @@ class Receipts {
 		let total: Double
 		
 		let paymentMethods: [PaymentMethod]
+		
+		func toAnyObject() -> Any {
+			return [
+				"items" : items,
+				"subtotal" : subtotal,
+				"discount" : discount as Any,
+				"total" : total,
+				"paymentMethods" : paymentMethods
+			]
+		}
 	}
 	
 	struct Item {
-		let uid: String
+		let uuid: String
 		let name: String
 		let price: Double
 		let quantity: Int
+		
+		func toAnyObject() -> Any {
+			return [
+				"uuid" : uuid,
+				"name" : name,
+				"price" : price,
+				"quantity" : quantity
+			]
+		}
 	}
 	
 	struct PaymentMethod {
@@ -60,6 +87,16 @@ class Receipts {
 		let cardVendor: Vendor?
 		
 		let creditRemaining: Double?
+		
+		func toAnyObject() -> Any {
+			return [
+				"type" : type.rawValue,
+				"amount" : amount,
+				"cardNumber" : cardNumber as Any,
+				"cardVendor" : cardVendor?.rawValue as Any,
+				"creditRemaining" : creditRemaining as Any
+			]
+		}
 	}
 	
 	// MARK: Enum
@@ -93,13 +130,13 @@ class Receipts {
 	
 	// MARK: Firestore Methods
 	private func getReceiptRefs(completion: @escaping([DocReferences]) -> Void) {
-		guard let userReference: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier) else { completion([]); fatalError(); return }
+		let userReference: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 		
 		// Get Receipt Document References
 		var receipts: [DocReferences] = []
 		userReference.getDocument { (document, error) in
 			if let error = error {
-				fatalError("\(error)")
+				print("\(error)")
 				completion([])
 				return
 			} else if let document = document {
@@ -113,24 +150,21 @@ class Receipts {
 				
 				completion(receipts)
 			} else {
-				fatalError("\(error)")
 				completion([])
-				return
 			}
 		}
 	}
 	
 	private func getReceiptDetails(references: [DocReferences], completion: @escaping([Receipt]) -> Void) {
 		// Get Each Receipt
-		print("Getting Receipt Details... - \(references)")
-		guard let receiptReference: CollectionReference = data.collection("Receipts") else { completion([]); fatalError(); return }
+		print("Getting Receipt Details...")
+		let receiptReference: CollectionReference = data.collection("Receipts")
 		
 		for reference in references {
 			receiptReference.document(reference.reference.documentID).getDocument { (matchingDocument, error) in
 				if let error = error {
-					fatalError("\(error)")
+					print("\(error)")
 					completion([])
-					return
 				} else if let matchingDocument = matchingDocument {
 					print("Collating Receipt Details...")
 					// Generate receipt for user to view
@@ -142,11 +176,11 @@ class Receipts {
 					var storeDetails: StoreDetails {
 						let store = data["store"] as! [String : Any]
 						
-						let uid: String = store["uid"] as! String
+						let uuid: String = store["uuid"] as! String
 						let name: String = store["name"] as! String
 						let location: GeoPoint = store["location"] as! GeoPoint
 						
-						return StoreDetails(uid: uid, name: name, location: location)
+						return StoreDetails(uuid: uuid, name: name, location: location)
 					}
 					
 					var transactionDetails: ReceiptDetails {
@@ -160,12 +194,12 @@ class Receipts {
 						
 						var decodedItems: [Item] = []
 						for item in items {
-							let uid: String = item["uid"] as! String
+							let uuid: String = item["uuid"] as! String
 							let name: String = item["name"] as! String
 							let price: Double = item["price"] as! Double
 							let quantity: Int = item["quantity"] as! Int
 							
-							decodedItems.append(Item(uid: uid, name: name, price: price, quantity: quantity))
+							decodedItems.append(Item(uuid: uuid, name: name, price: price, quantity: quantity))
 						}
 						
 						var decodedPaymentMethods: [PaymentMethod] = []
@@ -196,12 +230,9 @@ class Receipts {
 					
 					if self.receipts.count == references.count {
 						completion(self.receipts)
-						return
 					}
 				} else {
-					fatalError()
 					completion([])
-					return
 				}
 			}
 		}
@@ -212,6 +243,23 @@ class Receipts {
 		self.getReceiptRefs { (references) in
 			self.getReceiptDetails(references: references) { (receipts) in
 				completion(receipts)
+			}
+		}
+	}
+	
+	func uploadSalesReceipt(sale: Sale, completion: @escaping(Receipt?) -> Void) {
+		let newReceiptDocument: DocumentReference = data.collection("Receipts").document()
+		
+		let store: StoreDetails = StoreDetails(uuid: Authentication.account.uniqueIdentifier, name: Authentication.account.storeDetails.name, location: GeoPoint(latitude: 0, longitude: 0))
+		let transactionDetails: ReceiptDetails = ReceiptDetails(items: sale.items.map({Item(uuid: $0.uuid, name: $0.name, price: $0.price, quantity: $0.quantity)}), subtotal: sale.total, discount: nil, total: sale.total, paymentMethods: sale.payment)
+		
+		let receipt: Receipts.Receipt = Receipts.Receipt(seen: false, date: Date().convertToTimestamp(), identifier: newReceiptDocument.documentID, storeDetails: store, transactionDetails: transactionDetails)
+		
+		newReceiptDocument.setData(["date" : receipt.date, "user" : sale.userCode, "store" : receipt.storeDetails.toAnyObject(), "transaction" : receipt.transactionDetails.toAnyObject()]) { (error) in
+			if error != nil {
+				completion(receipt)
+			} else {
+				completion(nil)
 			}
 		}
 	}

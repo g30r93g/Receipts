@@ -18,12 +18,12 @@ class Sale {
 		self.items = []
 		self.payment = []
 		self.saleID = ""
-		
-		generateSaleID()
+		self.userCode = ""
 	}
 	
 	// MARK: Variables
 	private var saleID: String
+	private(set) var userCode: String
 	private(set) var items: [Item]
 	private(set) var payment: [Receipts.PaymentMethod]
 	private(set) var receipt: Receipts.Receipt!
@@ -33,10 +33,6 @@ class Sale {
 	}
 	
 	// MARK: Methods
-	private func generateSaleID() {
-		self.saleID = ""
-	}
-	
 	func addItem(_ item: Item) {
 		self.items.insert(item, at: 0)
 	}
@@ -49,16 +45,23 @@ class Sale {
 		self.payment = details
 	}
 	
-	func lookupItem(from barcode: String, callback: @escaping(Item?) -> Void) {
-		callback(nil)
+	func lookupItem(from barcode: String, completion: @escaping(Item?) -> Void) {
+		completion(nil)
 	}
 	
-	func generateReceipt(callback: @escaping(Bool) -> Void) {
-		callback(false)
+	func uploadReceipt(userCode: String, completion: @escaping(Bool) -> Void) {
+		self.userCode = userCode
+		
+		Receipts.current.uploadSalesReceipt(sale: self) { (receipt) in
+			if let receipt = receipt { self.saleID = receipt.identifier }
+			
+			completion(receipt != nil)
+		}
 	}
 	
 	// MARK: Structs
 	struct Item {
+		let uuid: String
 		let name: String
 		let price: Double
 		var quantity: Int

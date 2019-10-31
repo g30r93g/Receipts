@@ -50,7 +50,7 @@ extension UserCodeViewController: ScannerViewDelegate {
 	func didScanQRCode(_ code: String) {
 		self.validateCode(code) { (success) in
 			if success {
-				Sale.current.generateReceipt() { (success) in
+				Sale.current.uploadReceipt(userCode: code) { (success) in
 					if success {
 						self.userCode = code
 						self.performSegue(withIdentifier: "Sale Complete", sender: nil)

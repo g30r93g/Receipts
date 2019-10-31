@@ -20,12 +20,10 @@ protocol ScannerViewDelegate: class {
 }
 
 extension ScannerViewDelegate {
-	
 	func didScanQRCode(_ code: String) {}
 	func didScanBarcode(_ code: String) {}
 	func flashDidChange(to state: Bool) {}
 	func scanningDidStart() {}
-	
 }
 
 class ScannerView: UIView {
@@ -43,7 +41,7 @@ class ScannerView: UIView {
     }
 	
 	// MARK: Variables
-	var captureSession: AVCaptureSession?
+	var captureSession: AVCaptureSession!
 	
 	var flashIsOn: Bool = false
 	
@@ -68,12 +66,10 @@ class ScannerView: UIView {
 	private func setupView() {
 		self.clipsToBounds = true
 		self.captureSession = AVCaptureSession()
-		
-		self.startScanning()
 	}
 	
-	private func startScanning() {
-		guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+	func setupSession() {
+		guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { fatalError() }
 		
 		let videoInput: AVCaptureDeviceInput
 		do {
@@ -83,30 +79,29 @@ class ScannerView: UIView {
 			return
 		}
 		
-		if (captureSession?.canAddInput(videoInput) ?? false) {
-			captureSession?.addInput(videoInput)
+		if (self.captureSession.canAddInput(videoInput)) {
+			self.captureSession.addInput(videoInput)
 		} else {
 			scanningDidFail()
 			return
 		}
 		
 		let metadataOutput = AVCaptureMetadataOutput()
-        
-        if (captureSession?.canAddOutput(metadataOutput) ?? false) {
-            captureSession?.addOutput(metadataOutput)
+		
+		if (self.captureSession.canAddOutput(metadataOutput)) {
+			self.captureSession.addOutput(metadataOutput)
             
             metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-            metadataOutput.metadataObjectTypes = [.qr, .ean8, .ean13, .pdf417]
+			metadataOutput.metadataObjectTypes = [.qr, .ean8, .ean13, .upce]
         } else {
             scanningDidFail()
+			fatalError()
             return
         }
-        
+		
         self.layer.session = captureSession
+		self.layer.frame = self.layer.bounds
         self.layer.videoGravity = .resizeAspectFill
-        
-        captureSession?.startRunning()
-		self.delegate?.scanningDidStart()
 	}
 	
 	func toggleFlash() {
@@ -116,19 +111,30 @@ class ScannerView: UIView {
 		do {
 			try device.lockForConfiguration()
 			
+			self.flashIsOn = !self.flashIsOn
+			device.torchMode = self.flashIsOn ? .off : .on
+			
 			if !self.flashIsOn {
 				try device.setTorchModeOn(level: AVCaptureDevice.maxAvailableTorchLevel)
 				self.delegate?.flashDidChange(to: true)
 			} else {
-				try device.setTorchModeOn(level: 0)
 				self.delegate?.flashDidChange(to: false)
 			}
 			
-			self.flashIsOn = !self.flashIsOn
 			device.unlockForConfiguration()
 		} catch {
 			print("Flash not usable.")
 		}
+	}
+	
+	func startCapture() {
+		self.captureSession.startRunning()
+		self.delegate?.scanningDidStart()
+	}
+	
+	func stopCapture() {
+		self.captureSession.stopRunning()
+		self.delegate?.scanningDidStop()
 	}
 	
 	// MARK: Delegate Methods
@@ -142,19 +148,17 @@ class ScannerView: UIView {
 extension ScannerView: AVCaptureMetadataOutputObjectsDelegate {
 	
 	func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
-        
-        if let metadataObject = metadataObjects.first {
-            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
-            guard let scannedString = readableObject.stringValue else { return }
-			
-			switch readableObject.type {
-			case .qr:
-				self.delegate?.didScanQRCode(scannedString)
-			case .ean13, .upce:
-				self.delegate?.didScanBarcode(scannedString)
-			default:
-				break
-			}
+		guard let metadataObject = metadataObjects.first else { fatalError() }
+		guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { fatalError() }
+		guard let scannedString = readableObject.stringValue else { fatalError() }
+		
+		switch readableObject.type {
+		case .qr:
+			self.delegate?.didScanQRCode(scannedString)
+		case .ean8, .ean13, .upce:
+			self.delegate?.didScanBarcode(scannedString)
+		default:
+			break
         }
     }
 	

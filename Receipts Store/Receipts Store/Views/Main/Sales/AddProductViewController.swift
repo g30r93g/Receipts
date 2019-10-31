@@ -27,6 +27,16 @@ class AddProductViewController: UIViewController {
 	// MARK: View Controller Life Cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		
+		self.camera.delegate = self
+	}
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		if !self.camera.isRunning {
+			self.camera.startCapture()
+		}
 	}
 	
 	// MARK: IBActions
@@ -55,6 +65,10 @@ extension AddProductViewController: ScannerViewDelegate {
 		}
 	}
 	
+	func scanningDidStart() {
+		print("Started searching for barcodes")
+	}
+	
 	func scanningDidFail() {
 		self.dismiss(animated: true, completion: nil)
 	}
@@ -65,9 +79,9 @@ extension AddProductViewController: ScannerViewDelegate {
 	
 	func flashDidChange(to state: Bool) {
 		if state {
-			self.flash.imageView!.image = UIImage(systemName: "bolt.fill")
+			self.flash.imageView!.image = UIImage(systemName: "bolt.fill")!
 		} else {
-			self.flash.imageView!.image = UIImage(systemName: "bolt")
+			self.flash.imageView!.image = UIImage(systemName: "bolt")!
 		}
 	}
 	

@@ -34,6 +34,8 @@ class SettingsViewController: UITableViewController {
 		if let storeLogo = Authentication.account.storeDetails.logo {
 			self.storeIcon.image = storeLogo
 		}
+		
+		self.biometricAuthentication.setOn(UserDefaults.standard.bool(forKey: "Biometric Authentication"), animated: false)
 	}
 	
 	private func showConfirmationAlert(text: String) {
@@ -46,7 +48,7 @@ class SettingsViewController: UITableViewController {
 	
 	// MARK: IBActions
 	@IBAction func biometrticAuthenticationToggled(_ sender: UISwitch) {
-		
+		UserDefaults.standard.set(sender.isOn, forKey: "Biometric Authentication")
 	}
 	
 }
@@ -60,7 +62,7 @@ extension SettingsViewController {
 		switch indexPath.section {
 		case 0:
 			switch indexPath.row {
-			case 0:
+			case 1:
 				// Change Password
 				let alert = UIAlertController(title: "Change Password", message: nil, preferredStyle: .alert)
 				
@@ -95,7 +97,7 @@ extension SettingsViewController {
 				}))
 				
 				self.present(alert, animated: true, completion: nil)
-			case 1:
+			case 2:
 				// Update Phone Number
 				let alert = UIAlertController(title: "Update Phone Number", message: nil, preferredStyle: .alert)
 				
@@ -104,6 +106,7 @@ extension SettingsViewController {
 					textField.keyboardAppearance = .dark
 					textField.textContentType = .telephoneNumber
 					textField.placeholder = "Phone Number"
+					textField.text = Authentication.account.storeDetails.phoneNumber
 					textField.returnKeyType = .continue
 				}
 				
@@ -121,10 +124,33 @@ extension SettingsViewController {
 				}))
 				
 				self.present(alert, animated: true, completion: nil)
-			case 2:
-				// Update Store Name
-				break
 			case 3:
+				// Update Store Name
+				let alert = UIAlertController(title: "Update Store Name", message: nil, preferredStyle: .alert)
+				
+				alert.addTextField { (textField) in
+					textField.isSecureTextEntry = true
+					textField.keyboardAppearance = .dark
+					textField.placeholder = "Store Name"
+					textField.text = Authentication.account.storeDetails.name
+					textField.returnKeyType = .continue
+				}
+				
+				alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+				alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
+					guard let newStoreName = alert.textFields![0].text else { return }
+					
+					Authentication.account.updateStoreName(newName: newStoreName) { (success) in
+						if success {
+							self.showConfirmationAlert(text: "Phone number updated!")
+						} else {
+							fatalError()
+						}
+					}
+				}))
+				
+				self.present(alert, animated: true, completion: nil)
+			case 4:
 				// Update Store Logo
 				break
 			default:

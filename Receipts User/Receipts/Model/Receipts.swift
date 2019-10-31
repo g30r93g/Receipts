@@ -92,45 +92,43 @@ class Receipts {
 	}
 	
 	// MARK: Firestore Methods
+	/// Retrieves all receipt references
 	private func getReceiptRefs(completion: @escaping([DocReferences]) -> Void) {
-		guard let userReference: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier) else { completion([]); fatalError(); return }
+		let userReference: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 		
 		// Get Receipt Document References
 		var receipts: [DocReferences] = []
 		userReference.getDocument { (document, error) in
 			if let error = error {
-				fatalError("\(error)")
+				print("\(error)")
 				completion([])
-				return
 			} else if let document = document {
 				let data = document.data()!
 				let receiptReferences = data["receipts"] as! [DocumentReference]
-				let unreadReceiptReferences = data["unreadReceipts"] as! [DocumentReference]
-				
+				let unreadReceiptReferences = data["newReceipts"] as! [DocumentReference]
+			
 				for receiptReference in receiptReferences {
 					receipts.append(DocReferences(reference: receiptReference, isSeen: !unreadReceiptReferences.contains(receiptReference)))
 				}
 				
 				completion(receipts)
 			} else {
-				fatalError("\(error)")
+				print("\(error)")
 				completion([])
-				return
 			}
 		}
 	}
 	
+	/// Gets all receipts - parses all data
 	private func getReceiptDetails(references: [DocReferences], completion: @escaping([Receipt]) -> Void) {
-		// Get Each Receipt
 		print("Getting Receipt Details... - \(references)")
-		guard let receiptReference: CollectionReference = data.collection("Receipts") else { completion([]); fatalError(); return }
+		let receiptReference: CollectionReference = data.collection("Receipts")
 		
 		for reference in references {
 			receiptReference.document(reference.reference.documentID).getDocument { (matchingDocument, error) in
 				if let error = error {
-					fatalError("\(error)")
+					print("\(error)")
 					completion([])
-					return
 				} else if let matchingDocument = matchingDocument {
 					print("Collating Receipt Details...")
 					// Generate receipt for user to view
@@ -199,9 +197,7 @@ class Receipts {
 						return
 					}
 				} else {
-					fatalError()
 					completion([])
-					return
 				}
 			}
 		}

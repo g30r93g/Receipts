@@ -56,7 +56,7 @@ class AccountViewController: UITableViewController {
 	private func updatePrefs() {
 		Authentication.account.updateUserPrefs(prefs: ["pushNotifs" : self.pushNotificationToggle.isOn, "emailNotifs" : self.emailNotificationToggle.isOn]) { (success) in
 			if success {
-				print("Updated")
+				print("Updated user prefs.")
 			} else {
 				fatalError()
 			}
@@ -169,8 +169,10 @@ extension AccountViewController {
 				self.authenticateOnLaunchToggle.setOn(!self.authenticateOnLaunchToggle.isOn, animated: true)
 			case 1:
 				self.pushNotificationToggle.setOn(!self.pushNotificationToggle.isOn, animated: true)
+				self.updatePrefs()
 			case 2:
 				self.emailNotificationToggle.setOn(!self.emailNotificationToggle.isOn, animated: true)
+				self.updatePrefs()
 			default:
 				break
 			}

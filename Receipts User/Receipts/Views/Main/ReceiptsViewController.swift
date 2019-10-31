@@ -17,6 +17,8 @@ class ReceiptsViewController: UIViewController {
 	@IBOutlet weak var receiptPeriodSelector: UISegmentedControl!
 	@IBOutlet weak var receiptTable: UITableView!
 	
+	@IBOutlet weak var showReceiptCode: UIButton!
+	
 	// MARK: Variables
 	var receipts: [Receipts.Receipt] = []
 	
@@ -119,6 +121,10 @@ class ReceiptsViewController: UIViewController {
 	// MARK: IBActions
 	@IBAction func segmentChanged(_ sender: UISegmentedControl) {
 		self.receiptTable.reloadData()
+	}
+	
+	@IBAction func showUserCode(_ sender: UIButton) {
+		self.performSegue(withIdentifier: "Show User Code", sender: nil)
 	}
 	
 }

@@ -158,7 +158,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <color key="tintColor" name="Text"/>
                                         <inset key="imageEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
-                                        <state key="normal" image="bolt.fill" catalog="system">
+                                        <state key="normal" image="bolt" catalog="system">
                                             <color key="titleColor" name="Text"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -522,7 +522,7 @@
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                            <real key="value" value="40"/>
+                                                            <real key="value" value="16"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                             <real key="value" value="1"/>
@@ -1309,6 +1309,7 @@
     </scenes>
     <resources>
         <image name="arrow.left" catalog="system" width="64" height="48"/>
+        <image name="bolt" catalog="system" width="50" height="64"/>
         <image name="bolt.fill" catalog="system" width="50" height="64"/>
         <image name="creditcard" catalog="system" width="64" height="44"/>
         <image name="creditcard.fill" catalog="system" width="64" height="44"/>
@@ -1329,7 +1330,7 @@
             <color red="0.0" green="0.49000000953674316" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Secondary Text">
-            <color red="0.74599999189999999" green="0.80599999430000002" blue="0.83399999140000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.74599999189376831" green="0.8059999942779541" blue="0.83399999141693115" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="Text">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

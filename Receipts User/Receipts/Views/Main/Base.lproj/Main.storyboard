@@ -159,14 +159,50 @@
                                     <action selector="segmentChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="c2W-rB-jOq"/>
                                 </connections>
                             </segmentedControl>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZW-XZ-xTm">
+                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ri2-FB-lbC">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipt Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lfe-Nf-QNA">
+                                            <rect key="frame" x="20" y="18" width="123.5" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                            <color key="textColor" name="Text"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7E-8I-Uyx">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                            <connections>
+                                                <action selector="showUserCode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Xt6-9D-rfE"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="m7E-8I-Uyx" firstAttribute="top" secondItem="Ri2-FB-lbC" secondAttribute="top" id="0as-3E-UlZ"/>
+                                        <constraint firstItem="Lfe-Nf-QNA" firstAttribute="centerY" secondItem="Ri2-FB-lbC" secondAttribute="centerY" id="A2o-OJ-dTf"/>
+                                        <constraint firstAttribute="trailing" secondItem="m7E-8I-Uyx" secondAttribute="trailing" id="Ex6-1G-k0w"/>
+                                        <constraint firstItem="Lfe-Nf-QNA" firstAttribute="leading" secondItem="Ri2-FB-lbC" secondAttribute="leading" constant="20" id="S2l-6G-AXb"/>
+                                        <constraint firstItem="m7E-8I-Uyx" firstAttribute="leading" secondItem="Ri2-FB-lbC" secondAttribute="leading" id="pg3-G1-0QS"/>
+                                        <constraint firstAttribute="bottom" secondItem="m7E-8I-Uyx" secondAttribute="bottom" id="vPw-Jz-NnY"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="GW4-qa-IOs"/>
+                                </constraints>
+                                <blurEffect style="systemUltraThinMaterialDark"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" name="Background"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xuf-11-y5E" secondAttribute="trailing" id="0Nf-Bm-d7f"/>
                             <constraint firstItem="4b5-RI-MYm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2rT-xV-wMp"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Xuf-11-y5E" secondAttribute="bottom" id="9l6-0Q-aGN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="nZW-XZ-xTm" secondAttribute="trailing" id="AiT-NA-Aqf"/>
                             <constraint firstItem="Xuf-11-y5E" firstAttribute="top" secondItem="DXR-jv-J9c" secondAttribute="bottom" constant="12" id="Fva-C3-Hak"/>
+                            <constraint firstItem="nZW-XZ-xTm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Z5d-P5-Cyt"/>
                             <constraint firstItem="4b5-RI-MYm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="ehD-1b-gPu"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nZW-XZ-xTm" secondAttribute="bottom" id="hHh-uE-bP7"/>
                             <constraint firstItem="DXR-jv-J9c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="i8O-sr-Nhy"/>
                             <constraint firstItem="DXR-jv-J9c" firstAttribute="top" secondItem="4b5-RI-MYm" secondAttribute="bottom" constant="12" id="ldE-C3-IyQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DXR-jv-J9c" secondAttribute="trailing" constant="80" id="o2h-Rl-Bqr"/>
@@ -176,18 +212,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Receipts" id="uP9-D5-gel">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="JOL-fb-QIR">
-                            <connections>
-                                <segue destination="B0C-i8-hba" kind="presentation" identifier="Show Code" id="COa-xZ-gmJ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Receipts" id="uP9-D5-gel"/>
                     <connections>
                         <outlet property="newReceiptNotification" destination="4b5-RI-MYm" id="GRF-LV-R4y"/>
                         <outlet property="newReceiptNotificationHeight" destination="vee-L0-Wax" id="5a7-Cz-Xxr"/>
                         <outlet property="receiptPeriodSelector" destination="DXR-jv-J9c" id="eVh-Vy-tKZ"/>
                         <outlet property="receiptTable" destination="Xuf-11-y5E" id="rRj-BJ-M0w"/>
+                        <outlet property="showReceiptCode" destination="m7E-8I-Uyx" id="ElY-El-r2S"/>
+                        <segue destination="B0C-i8-hba" kind="presentation" identifier="Show User Code" id="9rH-by-hVQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -312,7 +344,6 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="dismissTapped:" destination="sF2-rZ-Xdq" eventType="touchUpInside" id="CGf-P8-MmJ"/>
-                                    <action selector="dismissTapped:" destination="B0C-i8-hba" eventType="touchUpInside" id="yUg-pU-STH"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="G1b-nT-AGW">
@@ -447,34 +478,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receipt Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lrb-hM-t2l">
-                                <rect key="frame" x="133.5" y="40" width="147" height="40"/>
+                                <rect key="frame" x="133.5" y="50" width="147" height="29"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VgP-ou-qdP" customClass="RoundButton" customModule="Receipts" customModuleProvider="target">
-                                <rect key="frame" x="16" y="40" width="40" height="40"/>
-                                <color key="backgroundColor" name="Primary Accent"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="J0K-cV-W3b"/>
-                                    <constraint firstAttribute="height" constant="40" id="gyV-pL-8by"/>
-                                </constraints>
-                                <color key="tintColor" name="Text"/>
-                                <inset key="imageEdgeInsets" minX="12" minY="12" maxX="12" maxY="12"/>
-                                <state key="normal" image="Cross">
-                                    <color key="titleColor" name="Text"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="20"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="dismissTapped:" destination="B0C-i8-hba" eventType="touchUpInside" id="zbn-vn-xUk"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan this code once you've scanned all your items or when the cashier asks for it." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3As-EE-V2z" customClass="RoundLabel" customModule="Receipts" customModuleProvider="target">
-                                <rect key="frame" x="20" y="520" width="374" height="75"/>
+                                <rect key="frame" x="20" y="517" width="374" height="75"/>
                                 <color key="backgroundColor" name="Primary Accent"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="27j-bg-sfO"/>
@@ -501,7 +511,7 @@
                                 </userDefinedRuntimeAttributes>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gBV-DY-lfh" customClass="RoundImageView" customModule="Receipts" customModuleProvider="target">
-                                <rect key="frame" x="20" y="116" width="374" height="374"/>
+                                <rect key="frame" x="20" y="111" width="374" height="374"/>
                                 <color key="backgroundColor" name="Text Field"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="gBV-DY-lfh" secondAttribute="height" multiplier="1:1" id="gwg-N2-ErL"/>
@@ -512,35 +522,41 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xD8-HS-lwm" customClass="RoundButton" customModule="Receipts" customModuleProvider="target">
+                                <rect key="frame" x="171" y="10" width="72" height="24"/>
+                                <color key="tintColor" red="0.14941438801300627" green="0.14935988235695866" blue="0.16217877538071068" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <state key="normal" image="chevron"/>
+                                <connections>
+                                    <action selector="dismissTapped:" destination="B0C-i8-hba" eventType="touchUpInside" id="ytp-dr-690"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" name="Background"/>
                         <constraints>
                             <constraint firstItem="gBV-DY-lfh" firstAttribute="centerX" secondItem="WrF-hF-QfX" secondAttribute="centerX" id="5B1-GF-lJP"/>
-                            <constraint firstItem="lrb-hM-t2l" firstAttribute="top" secondItem="Ent-RZ-rmR" secondAttribute="top" constant="40" id="5PP-wP-UCT"/>
-                            <constraint firstItem="3As-EE-V2z" firstAttribute="top" secondItem="gBV-DY-lfh" secondAttribute="bottom" constant="30" id="7H3-Mh-OHb"/>
+                            <constraint firstItem="lrb-hM-t2l" firstAttribute="top" secondItem="Ent-RZ-rmR" secondAttribute="top" constant="50" id="5PP-wP-UCT"/>
+                            <constraint firstItem="3As-EE-V2z" firstAttribute="top" secondItem="gBV-DY-lfh" secondAttribute="bottom" constant="32" id="7H3-Mh-OHb"/>
                             <constraint firstItem="gBV-DY-lfh" firstAttribute="leading" secondItem="Ent-RZ-rmR" secondAttribute="leading" constant="20" id="A1H-UD-t0l"/>
                             <constraint firstItem="Ent-RZ-rmR" firstAttribute="trailing" secondItem="gBV-DY-lfh" secondAttribute="trailing" constant="20" id="BfS-CC-0DQ"/>
-                            <constraint firstItem="lrb-hM-t2l" firstAttribute="top" secondItem="VgP-ou-qdP" secondAttribute="top" id="Cc8-vh-eKc"/>
-                            <constraint firstItem="gBV-DY-lfh" firstAttribute="top" secondItem="lrb-hM-t2l" secondAttribute="bottom" constant="36" id="Sed-QW-MZC"/>
+                            <constraint firstItem="gBV-DY-lfh" firstAttribute="top" secondItem="lrb-hM-t2l" secondAttribute="bottom" constant="32" id="Sed-QW-MZC"/>
                             <constraint firstItem="3As-EE-V2z" firstAttribute="leading" secondItem="gBV-DY-lfh" secondAttribute="leading" id="WlE-7X-rti"/>
-                            <constraint firstItem="lrb-hM-t2l" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VgP-ou-qdP" secondAttribute="trailing" constant="20" id="XOZ-Bb-NsQ"/>
+                            <constraint firstItem="xD8-HS-lwm" firstAttribute="centerX" secondItem="WrF-hF-QfX" secondAttribute="centerX" id="evz-xk-Ou6"/>
+                            <constraint firstItem="xD8-HS-lwm" firstAttribute="top" secondItem="Ent-RZ-rmR" secondAttribute="top" constant="10" id="gNw-YS-LLy"/>
                             <constraint firstItem="lrb-hM-t2l" firstAttribute="centerX" secondItem="WrF-hF-QfX" secondAttribute="centerX" id="kKa-dX-KGM"/>
-                            <constraint firstItem="VgP-ou-qdP" firstAttribute="leading" secondItem="Ent-RZ-rmR" secondAttribute="leading" constant="16" id="qKw-Zn-bEN"/>
                             <constraint firstItem="3As-EE-V2z" firstAttribute="centerX" secondItem="WrF-hF-QfX" secondAttribute="centerX" id="sck-Zx-VPK"/>
-                            <constraint firstItem="lrb-hM-t2l" firstAttribute="bottom" secondItem="VgP-ou-qdP" secondAttribute="bottom" id="xE3-79-jhm"/>
                             <constraint firstItem="3As-EE-V2z" firstAttribute="trailing" secondItem="gBV-DY-lfh" secondAttribute="trailing" id="xrz-C2-fo7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ent-RZ-rmR"/>
                     </view>
                     <navigationItem key="navigationItem" title="Receipt Code" id="s4x-0Q-71j"/>
                     <connections>
-                        <outlet property="dismiss" destination="VgP-ou-qdP" id="Yzc-qd-845"/>
+                        <outlet property="dismiss" destination="xD8-HS-lwm" id="oTW-zf-k3R"/>
                         <outlet property="userCode" destination="gBV-DY-lfh" id="HFk-xZ-VYi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i60-xY-CkE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1957" y="90"/>
+            <point key="canvasLocation" x="1957" y="74"/>
         </scene>
         <!--Receipts-->
         <scene sceneID="a3U-1k-mGB">
@@ -758,7 +774,7 @@
                                                         <action selector="pushNotificationToggled:" destination="UoW-TH-fam" eventType="valueChanged" id="9Qz-ML-GUP"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Notification for New Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdy-Zq-rde">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Notifications for New Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gdy-Zq-rde">
                                                     <rect key="frame" x="16" y="0.0" width="335" height="66"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                     <color key="textColor" name="Text"/>
@@ -789,7 +805,7 @@
                                                         <action selector="emailNotificationToggled:" destination="UoW-TH-fam" eventType="valueChanged" id="XCf-oF-xty"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Email for New Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lm-M4-dWo">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send Emails for New Receipt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Lm-M4-dWo">
                                                     <rect key="frame" x="16" y="0.0" width="335" height="66"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                     <color key="textColor" name="Text"/>
@@ -934,9 +950,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Cross" width="350" height="350"/>
         <image name="Receipt" width="28" height="23"/>
         <image name="arrow.left" catalog="system" width="64" height="48"/>
+        <image name="chevron" width="36" height="12"/>
         <image name="person.circle" catalog="system" width="64" height="60"/>
         <image name="person.circle.fill" catalog="system" width="64" height="60"/>
         <namedColor name="Background">
