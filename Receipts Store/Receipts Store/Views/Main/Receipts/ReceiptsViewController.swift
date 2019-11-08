@@ -13,38 +13,37 @@ class ReceiptsViewController: UIViewController {
 	// MARK: IBOutlets
 	@IBOutlet weak var receiptsTable: UITableView!
 	
-	// MARK: Variables
-	
 	// MARK: View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 		
-		self.setupView()
+		self.updateReceipts()
     }
     
 	// MARK: Methods
-	private func setupView() {
-		
+	private func updateReceipts() {
+		Receipts.current.retrieveReceipts() { (_) in
+			self.receiptsTable.reloadData()
+		}
 	}
-	
-	// MARK: Navigation
 	
 	// MARK: IBActions
-	@IBAction func viewReceipt(_ sender: UIStoryboardSegue) {
-		
-	}
+	@IBAction func viewReceipts(_ sender: UIStoryboardSegue) { }
 	
 }
 
 extension ReceiptsViewController: UITableViewDelegate, UITableViewDataSource {
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 0
+		return Receipts.current.receipts.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "Receipt", for: indexPath) as! ReceiptCell
+		let data = Receipts.current.receipts[indexPath.row]
+		
+		cell.setupCell(from: data)
 		
 		return cell
 	}

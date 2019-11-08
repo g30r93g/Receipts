@@ -24,7 +24,11 @@ class Sale {
 	
 	// MARK: Variables
 	private(set) var userCode: String
-	private(set) var items: [Item]
+	private(set) var items: [Item] {
+		didSet {
+			NotificationCenter.default.post(name: Notification.Name("ItemsDidChange"), object: nil)
+		}
+	}
 	private(set) var payment: [Receipts.PaymentMethod]
 	private(set) var receipt: Receipts.Receipt!
 	

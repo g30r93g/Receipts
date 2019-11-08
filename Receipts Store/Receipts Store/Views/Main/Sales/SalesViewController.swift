@@ -22,7 +22,7 @@ class SalesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(updateView), name: Notification.Name("UserAddedItem"), object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(updateView), name: Notification.Name("ItemsDidChange"), object: nil)
 		self.updateView()
     }
 	
@@ -45,7 +45,7 @@ class SalesViewController: UIViewController {
 	
 	// MARK: IBActions
 	@IBAction func processAnotherSale(_ sender: UIStoryboardSegue) {
-		Sale.current.reset()
+		
 	}
 	
 }

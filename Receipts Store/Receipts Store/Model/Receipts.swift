@@ -16,7 +16,11 @@ class Receipts {
 	static let current = Receipts()
 	
 	// MARK: Firestore Data Variables
-	var receipts: [Receipt] = []
+	var receipts: [Receipt] = [] {
+		didSet {
+			NotificationCenter.default.post(name: Notification.Name("ReceiptsChanged"), object: nil)
+		}
+	}
 	var store: StoreDetails {
 		return StoreDetails(uuid: Authentication.account.uniqueIdentifier, name: Authentication.account.storeDetails.name, location: GeoPoint(latitude: 51.612250, longitude: -0.169036))
 	}
@@ -140,12 +144,21 @@ class Receipts {
 	}
 	
 	// MARK: Firestore Methods
+	func retrieveReceipts(completion: @escaping([Receipt]) -> Void) {
+		print("Getting Receipt References...")
+		self.getReceiptRefs { (references) in
+			self.getReceiptDetails(references: references) { (receipts) in
+				completion(receipts)
+			}
+		}
+	}
+	
 	private func getReceiptRefs(completion: @escaping([DocReferences]) -> Void) {
-		let userReference: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
+		let storeReference: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier)
 		
 		// Get Receipt Document References
 		var receipts: [DocReferences] = []
-		userReference.getDocument { (document, error) in
+		storeReference.getDocument { (document, error) in
 			if let error = error {
 				print("\(error)")
 				completion([])
@@ -155,9 +168,7 @@ class Receipts {
 				let receiptReferences = data["receipts"] as! [DocumentReference]
 				let unreadReceiptReferences = data["unreadReceipts"] as! [DocumentReference]
 				
-				for receiptReference in receiptReferences {
-					receipts.append(DocReferences(reference: receiptReference, isSeen: !unreadReceiptReferences.contains(receiptReference)))
-				}
+				receiptReferences.forEach( { receipts.append(DocReferences(reference: $0, isSeen: !unreadReceiptReferences.contains($0))) } )
 				
 				completion(receipts)
 			} else {
@@ -195,13 +206,13 @@ class Receipts {
 					}
 					
 					var transactionDetails: ReceiptDetails {
-						let details = data["transactionDetails"] as! [String : Any]
+						let details = data["transaction"] as! [String : Any]
 						let items = details["items"] as! [[String : Any]]
 						let paymentMethods = details["paymentMethods"] as! [[String : Any]]
 						
 						let subtotal: Double = details["subtotal"] as! Double
 						let total: Double = details["total"] as! Double
-						let discountAmount: Double = details["discountAmount"] as! Double
+						let discountAmount: Double = details["discount"] as! Double
 						
 						var decodedItems: [Item] = []
 						for item in items {
@@ -219,8 +230,7 @@ class Receipts {
 							let amount: Double = paymentMethod["amount"] as! Double
 							
 							let cardNumber: Int = paymentMethod["cardNumber"] as! Int
-							let parsedCardVendor: String = paymentMethod["cardVendor"] as! String
-							let cardVendor: Vendor = Vendor(rawValue: parsedCardVendor)!
+							let cardVendor: Vendor = Vendor(rawValue: paymentMethod["cardVendor"] as! String)!
 							let creditRemaining: Double = paymentMethod["creditRemaining"] as! Double
 							
 							decodedPaymentMethods.append(PaymentMethod(type: type, amount: amount, cardNumber: cardNumber, cardVendor: cardVendor, creditRemaining: creditRemaining))
@@ -241,15 +251,8 @@ class Receipts {
 				}
 			}
 		}
-	}
-	
-	func retrieveReceipts(endDate: Timestamp, completion: @escaping([Receipt]) -> Void) {
-		print("Getting Receipt References...")
-		self.getReceiptRefs { (references) in
-			self.getReceiptDetails(references: references) { (receipts) in
-				completion(receipts)
-			}
-		}
+		
+		completion([])
 	}
 	
 	func uploadSalesReceipt(sale: Sale, completion: @escaping(Receipt?) -> Void) {

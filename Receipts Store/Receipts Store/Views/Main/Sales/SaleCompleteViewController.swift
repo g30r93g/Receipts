@@ -25,6 +25,12 @@ class SaleCompleteViewController: UIViewController {
 		
 		self.setupView()
     }
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		Sale.current.reset()
+	}
     
 	// MARK: Methods
 	private func setupView() {

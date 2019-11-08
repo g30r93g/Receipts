@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1F66EB202375D6AE0079B585 /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66EB1F2375D6AE0079B585 /* Scanner.swift */; };
+		1F66EB22237620480079B585 /* UploadLogoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66EB21237620480079B585 /* UploadLogoViewController.swift */; };
 		1F799DC8231001A700BD9166 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DC0231001A700BD9166 /* SignUpViewController.swift */; };
 		1F799DCA231001A700BD9166 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F799DC2231001A700BD9166 /* Onboarding.storyboard */; };
 		1F799DCC231001A700BD9166 /* CompleteSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */; };
@@ -61,6 +62,7 @@
 
 /* Begin PBXFileReference section */
 		1F66EB1F2375D6AE0079B585 /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
+		1F66EB21237620480079B585 /* UploadLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogoViewController.swift; sourceTree = "<group>"; };
 		1F799DC0231001A700BD9166 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F799DC2231001A700BD9166 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteSignUpViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				1FBEB9E22365186800C92ACD /* SettingsViewController.swift */,
+				1F66EB21237620480079B585 /* UploadLogoViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				1FDD91B0230FF928008EE678 /* Authentication.swift in Sources */,
 				1FBEB9F52365EEEE00C92ACD /* Sale.swift in Sources */,
 				1FBEB9F32365245D00C92ACD /* ReceiptCell.swift in Sources */,
+				1F66EB22237620480079B585 /* UploadLogoViewController.swift in Sources */,
 				1F799DD2231005CB00BD9166 /* AddLogoViewController.swift in Sources */,
 				1FDD91B9230FF92C008EE678 /* Calendar.swift in Sources */,
 				1FDD91B8230FF92C008EE678 /* String.swift in Sources */,

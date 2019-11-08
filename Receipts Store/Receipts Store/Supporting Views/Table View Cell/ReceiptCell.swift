@@ -19,14 +19,9 @@ class ReceiptCell: UITableViewCell {
 	// MARK: Methods
 	func setupCell(from data: Receipts.Receipt) {
 		self.identifier.text = data.identifier
-		self.dateTime.text = "Quantity: \(data.date.dateValue().day()) at \(data.date.dateValue().time())"
+		self.dateTime.text = "Time: \(data.date.dateValue().day()) at \(data.date.dateValue().time())"
 		self.total.text = "£\(String(format: "%.2f", data.transactionDetails.total))"
-		
-		if data.seen {
-			self.seenIndicator.alpha = 0
-		} else {
-			self.seenIndicator.alpha = 1
-		}
+		self.seenIndicator.alpha = data.seen ? 0 : 1
 	}
 	
 }

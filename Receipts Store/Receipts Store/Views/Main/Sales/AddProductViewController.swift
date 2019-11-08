@@ -166,7 +166,6 @@ extension AddProductViewController: AVCaptureMetadataOutputObjectsDelegate {
 			self.matchItem(code: stringValue) { (item) in
 				if let matchedItem = item {
 					Sale.current.addItem(matchedItem)
-					NotificationCenter.default.post(name: Notification.Name("UserAddedItem"), object: nil)
 					
 					self.dismiss(animated: true, completion: nil)
 				} else {
