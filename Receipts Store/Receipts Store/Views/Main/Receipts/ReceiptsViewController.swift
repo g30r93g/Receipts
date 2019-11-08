@@ -31,6 +31,9 @@ class ReceiptsViewController: UIViewController {
 	// MARK: Navigation
 	
 	// MARK: IBActions
+	@IBAction func viewReceipt(_ sender: UIStoryboardSegue) {
+		
+	}
 	
 }
 

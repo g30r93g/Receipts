@@ -7,69 +7,149 @@
 //
 
 import UIKit
+import AVKit
 
 class UserCodeViewController: UIViewController {
 	
 	// MARK: IBOutlets
-	@IBOutlet weak var camera: ScannerView!
-	@IBOutlet weak var flash: RoundButton!
+	@IBOutlet weak var scanOutline: UIView!
+	@IBOutlet weak var qrIcon: UIImageView!
 	@IBOutlet weak var instructions: UILabel!
 	
-	// MARK: Variables
-	var userCode: String!
+	// MARK: Capture Variables
+	var captureSession: AVCaptureSession!
+    var previewLayer: AVCaptureVideoPreviewLayer!
 	
 	// MARK: View Controller Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+		
+		self.setupCaptureSession()
 	}
 	
 	// MARK: Methods
-	func validateCode(_ code: String, completion: @escaping(Bool) -> Void) {
-		completion(false)
+	private func validateCode(_ code: String, completion: @escaping(Bool) -> Void) {
+		// TODO: - Create a firebase function to check if a user exists
+		completion(true)
 	}
 	
-	// MARK: Navigation
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == "Sale Complete" {
-			let destVC = segue.destination as! SaleCompleteViewController
-			
-			destVC.userIdentifier = userCode
-		}
+	private func showLoadingView() {
+		self.qrIcon.tintColor = UIColor(named: "Confirm")!
+		// TODO: - Show loading view
 	}
 	
-	// MARK: IBActions
-	@IBAction func flashToggled(_ sender: RoundButton) {
-		self.camera.toggleFlash()
-	}
-
 }
 
-extension UserCodeViewController: ScannerViewDelegate {
+// Camera Session
+extension UserCodeViewController: AVCaptureMetadataOutputObjectsDelegate {
 	
-	func didScanQRCode(_ code: String) {
-		self.validateCode(code) { (success) in
-			if success {
-				Sale.current.uploadReceipt(userCode: code) { (success) in
-					if success {
-						self.userCode = code
-						self.performSegue(withIdentifier: "Sale Complete", sender: nil)
-					} else {
-						fatalError("Unable to generate receipt.")
-					}
-				}
-			} else {
-				fatalError("No user with code \(code) exists.")
-			}
+	func setupCaptureSession() {
+		// Initialise captureSession
+		captureSession = AVCaptureSession()
+		
+		// Get camera access
+		guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+		
+		// Attempt to set video input
+		var videoInput: AVCaptureDeviceInput!
+		do {
+			videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+		} catch {
+			// Failed to set video input
+			cameraSetupFailed()
+		}
+		
+		// Assign video input to capture session if possibe
+		if captureSession.canAddInput(videoInput) {
+			// Success
+			captureSession.addInput(videoInput)
+		} else {
+			// Failed
+			cameraSetupFailed()
+		}
+		
+		// Sets up scanning for capture session
+		let metadataOutput = AVCaptureMetadataOutput()
+		
+		// Checks if the camera can scan for metadata (qr codes)
+		if captureSession.canAddOutput(metadataOutput) {
+			// Success
+			captureSession.addOutput(metadataOutput)
+			
+			metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
+			metadataOutput.metadataObjectTypes = [.qr]
+			
+		} else {
+			// Failed
+			cameraSetupFailed()
+		}
+		
+		// Set the preview layer's output
+		previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+		
+		// Set the preview to aspect fill
+		previewLayer.videoGravity = .resizeAspectFill
+		
+		// Set the preview layer's bounds
+		previewLayer.frame = self.view.bounds
+		
+		// Add preview layer to the customer preview layer.
+		self.view.layer.insertSublayer(previewLayer, at: 0)
+		
+		// Start capturing
+		self.startCaptureSession()
+		
+		// Add region of interest
+		metadataOutput.rectOfInterest = self.previewLayer.metadataOutputRectConverted(fromLayerRect: self.scanOutline.frame)
+	}
+	
+	func startCaptureSession() {
+		if !captureSession.isRunning {
+			captureSession.startRunning()
 		}
 	}
 	
-	func scanningDidFail() {
-		fatalError()
+	func stopCaptureSession() {
+		if captureSession.isRunning {
+			captureSession.stopRunning()
+		}
 	}
 	
-	func scanningDidStop() {
-		print("Scanning stopped...")
+	func cameraSetupFailed() {
+        let alert = UIAlertController(title: "Scanning Not Supported", message: "Your device does not have a camera. This will prevent you from scanning barcodes. Please use an alternative device with a camera or service this device.", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+		
+        captureSession = nil
+    }
+	
+	func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+		if let metadataObject = metadataObjects.first {
+			self.stopCaptureSession()
+			
+            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
+            guard let stringValue = readableObject.stringValue else { return }
+			print("Found QR Code: \(stringValue)")
+
+			self.showLoadingView()
+			self.validateCode(stringValue) { (valid) in
+				if valid {
+					Sale.current.attatchPaymentDetails(details: [Receipts.PaymentMethod(type: .card, amount: Sale.current.total, cardNumber: 5355220212344341, cardVendor: .mastercard, creditRemaining: 0)])
+					
+					Sale.current.uploadReceipt(userCode: stringValue) { (success) in
+						if success {
+							self.performSegue(withIdentifier: "Sale Complete", sender: self)
+						} else {
+							fatalError()
+						}
+					}
+				} else {
+					fatalError()
+				}
+			}
+        }
 	}
 	
 }

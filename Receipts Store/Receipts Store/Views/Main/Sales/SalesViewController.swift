@@ -22,22 +22,31 @@ class SalesViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 		
-		self.setupView()
+		NotificationCenter.default.addObserver(self, selector: #selector(updateView), name: Notification.Name("UserAddedItem"), object: nil)
+		self.updateView()
     }
 	
 	// MARK: Methods
-	private func setupView() {
-		self.numberOfItems.text = "\(Sale.current.items.count) Items"
+	@objc private func updateView() {
+		switch Sale.current.numberOfItems {
+		case 0:
+			self.numberOfItems.text = "No Items"
+		case 1:
+			self.numberOfItems.text = "1 Item"
+		default:
+			self.numberOfItems.text = "\(Sale.current.numberOfItems) Items"
+		}
 		
-		var sum: Double = 0.0
-		Sale.current.items.forEach({sum += ($0.price * Double($0.quantity))})
-		
-		self.total.text =  "£\(String(format: "%.2f", sum))"
+		self.total.text =  "£\(String(format: "%.2f", Sale.current.total))"
+		self.itemsTable.reloadData()
 	}
 	
 	// MARK: Navigation
 	
 	// MARK: IBActions
+	@IBAction func processAnotherSale(_ sender: UIStoryboardSegue) {
+		Sale.current.reset()
+	}
 	
 }
 

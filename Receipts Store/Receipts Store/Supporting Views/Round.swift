@@ -40,6 +40,18 @@ class RoundView: UIView {
         }
     }
     
+	@IBInspectable var borderWidth: CGFloat = 0.0 {
+        didSet {
+            layer.borderWidth = borderWidth
+        }
+    }
+    
+    @IBInspectable var borderColor: UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) {
+        didSet {
+            layer.borderColor = borderColor.cgColor
+        }
+    }
+	
 }
 
 @IBDesignable

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestore
 
 class Sale {
 	
@@ -17,12 +19,10 @@ class Sale {
 	init() {
 		self.items = []
 		self.payment = []
-		self.saleID = ""
 		self.userCode = ""
 	}
 	
 	// MARK: Variables
-	private var saleID: String
 	private(set) var userCode: String
 	private(set) var items: [Item]
 	private(set) var payment: [Receipts.PaymentMethod]
@@ -32,9 +32,35 @@ class Sale {
 		return self.items.map({$0.price * Double($0.quantity)}).reduce(0, {$0 + $1})
 	}
 	
+	var numberOfItems: Int {
+		return self.items.map({$0.quantity}).reduce(0, {$0 + $1})
+	}
+	
+	// MARK: Structs
+	struct Item: Equatable {
+		let uuid: String
+		let name: String
+		let price: Double
+		var quantity: Int
+		
+		mutating func updateQuantity(to newQuantity: Int) {
+			self.quantity = newQuantity
+		}
+		
+		static func == (lhs: Item, rhs: Item) -> Bool {
+			return lhs.uuid == rhs.uuid
+		}
+	}
+	
 	// MARK: Methods
 	func addItem(_ item: Item) {
-		self.items.insert(item, at: 0)
+		if let existingIndex = self.items.firstIndex(where: {$0 == item}) {
+			var newItem = self.items.remove(at: existingIndex)
+			newItem.updateQuantity(to: item.quantity + 1)
+			self.items.insert(newItem, at: 0)
+		} else {
+			self.items.insert(item, at: 0)
+		}
 	}
 	
 	func removeItem(at index: Int) {
@@ -46,29 +72,37 @@ class Sale {
 	}
 	
 	func lookupItem(from barcode: String, completion: @escaping(Item?) -> Void) {
-		completion(nil)
+		let itemsReference: DocumentReference = Receipts.current.data.collection("Products").document(barcode)
+		
+		itemsReference.getDocument { (document, error) in
+			if error != nil {
+				completion(nil)
+			} else if let data = document?.data() {
+				completion(Item(uuid: barcode, name: data["name"] as! String, price: data["price"] as! Double, quantity: 1))
+			} else {
+				completion(nil)
+			}
+		}
 	}
 	
 	func uploadReceipt(userCode: String, completion: @escaping(Bool) -> Void) {
-		self.userCode = userCode
-		
 		Receipts.current.uploadSalesReceipt(sale: self) { (receipt) in
-			if let receipt = receipt { self.saleID = receipt.identifier }
-			
-			completion(receipt != nil)
+			if let receipt = receipt {
+				self.userCode = userCode
+				self.receipt = receipt
+				
+				completion(true)
+			} else {
+				completion(false)
+			}
 		}
 	}
 	
-	// MARK: Structs
-	struct Item {
-		let uuid: String
-		let name: String
-		let price: Double
-		var quantity: Int
-		
-		mutating func updateQuantity(to newQuantity: Int) {
-			self.quantity = newQuantity
-		}
+	func reset() {
+		self.items.removeAll()
+		self.payment.removeAll()
+		self.userCode = ""
+		self.receipt = nil
 	}
 	
 }

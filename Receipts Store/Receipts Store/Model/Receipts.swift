@@ -17,6 +17,9 @@ class Receipts {
 	
 	// MARK: Firestore Data Variables
 	var receipts: [Receipt] = []
+	var store: StoreDetails {
+		return StoreDetails(uuid: Authentication.account.uniqueIdentifier, name: Authentication.account.storeDetails.name, location: GeoPoint(latitude: 51.612250, longitude: -0.169036))
+	}
 	
 	// MARK: Firestore Data Structs
 	struct Receipt {
@@ -46,18 +49,18 @@ class Receipts {
 		let items: [Item]
 		
 		let subtotal: Double
-		let discount: Double?
+		let discount: Double
 		let total: Double
 		
 		let paymentMethods: [PaymentMethod]
 		
 		func toAnyObject() -> Any {
 			return [
-				"items" : items,
+				"items" : items.map({$0.toAnyObject()}),
 				"subtotal" : subtotal,
-				"discount" : discount as Any,
+				"discount" : discount,
 				"total" : total,
-				"paymentMethods" : paymentMethods
+				"paymentMethods" : paymentMethods.map({$0.toAnyObject()})
 			]
 		}
 	}
@@ -83,18 +86,18 @@ class Receipts {
 		
 		let amount: Double
 		
-		let cardNumber: Int?
-		let cardVendor: Vendor?
+		let cardNumber: Int
+		let cardVendor: Vendor
 		
-		let creditRemaining: Double?
+		let creditRemaining: Double
 		
 		func toAnyObject() -> Any {
 			return [
 				"type" : type.rawValue,
 				"amount" : amount,
-				"cardNumber" : cardNumber as Any,
-				"cardVendor" : cardVendor?.rawValue as Any,
-				"creditRemaining" : creditRemaining as Any
+				"cardNumber" : cardNumber,
+				"cardVendor" : cardVendor.rawValue,
+				"creditRemaining" : creditRemaining
 			]
 		}
 	}
@@ -104,6 +107,10 @@ class Receipts {
 		case card = "card"
 		case cash = "cash"
 		case storeCredit = "storeCredit"
+		
+		func toAnyObject() -> Any {
+			return self.rawValue
+		}
 	}
 	
 	enum Vendor: String {
@@ -117,6 +124,10 @@ class Receipts {
 		case jcb = "jcb"
 		case discover = "discover"
 		case unionPay = "unionPay"
+		
+		func toAnyObject() -> Any {
+			return self.rawValue
+		}
 	}
 	
 	// MARK: Firestore Variables
@@ -190,7 +201,7 @@ class Receipts {
 						
 						let subtotal: Double = details["subtotal"] as! Double
 						let total: Double = details["total"] as! Double
-						let discountAmount: Double? = details["discountAmount"] as? Double ?? nil
+						let discountAmount: Double = details["discountAmount"] as! Double
 						
 						var decodedItems: [Item] = []
 						for item in items {
@@ -207,16 +218,10 @@ class Receipts {
 							let type: Method = Method(rawValue: paymentMethod["type"] as! String)!
 							let amount: Double = paymentMethod["amount"] as! Double
 							
-							let cardNumber: Int? = paymentMethod["cardNumber"] as? Int
-							let parsedCardVendor: String? = paymentMethod["cardVendor"] as? String
-							var cardVendor: Vendor? {
-								if parsedCardVendor == nil {
-									return nil
-								} else {
-									return Vendor(rawValue: parsedCardVendor!)
-								}
-							}
-							let creditRemaining: Double? = paymentMethod["creditRemaining"] as? Double
+							let cardNumber: Int = paymentMethod["cardNumber"] as! Int
+							let parsedCardVendor: String = paymentMethod["cardVendor"] as! String
+							let cardVendor: Vendor = Vendor(rawValue: parsedCardVendor)!
+							let creditRemaining: Double = paymentMethod["creditRemaining"] as! Double
 							
 							decodedPaymentMethods.append(PaymentMethod(type: type, amount: amount, cardNumber: cardNumber, cardVendor: cardVendor, creditRemaining: creditRemaining))
 						}
@@ -250,16 +255,22 @@ class Receipts {
 	func uploadSalesReceipt(sale: Sale, completion: @escaping(Receipt?) -> Void) {
 		let newReceiptDocument: DocumentReference = data.collection("Receipts").document()
 		
-		let store: StoreDetails = StoreDetails(uuid: Authentication.account.uniqueIdentifier, name: Authentication.account.storeDetails.name, location: GeoPoint(latitude: 0, longitude: 0))
-		let transactionDetails: ReceiptDetails = ReceiptDetails(items: sale.items.map({Item(uuid: $0.uuid, name: $0.name, price: $0.price, quantity: $0.quantity)}), subtotal: sale.total, discount: nil, total: sale.total, paymentMethods: sale.payment)
+		let transactionDetails: ReceiptDetails = ReceiptDetails(items: sale.items.map({Item(uuid: $0.uuid, name: $0.name, price: $0.price, quantity: $0.quantity)}), subtotal: sale.total, discount: 0, total: sale.total, paymentMethods: sale.payment)
 		
-		let receipt: Receipts.Receipt = Receipts.Receipt(seen: false, date: Date().convertToTimestamp(), identifier: newReceiptDocument.documentID, storeDetails: store, transactionDetails: transactionDetails)
+		let receipt: Receipts.Receipt = Receipts.Receipt(seen: false, date: Date().convertToTimestamp(), identifier: newReceiptDocument.documentID, storeDetails: self.store, transactionDetails: transactionDetails)
+		print("Receipt ID: \(receipt.identifier)")
 		
-		newReceiptDocument.setData(["date" : receipt.date, "user" : sale.userCode, "store" : receipt.storeDetails.toAnyObject(), "transaction" : receipt.transactionDetails.toAnyObject()]) { (error) in
-			if error != nil {
-				completion(receipt)
-			} else {
+		newReceiptDocument.setData([
+			"date" : receipt.date,
+			"user" : sale.userCode,
+			"store" : receipt.storeDetails.toAnyObject(),
+			"transaction" : receipt.transactionDetails.toAnyObject(),
+		]) { (error) in
+			if let error = error {
+				print("Error: \(error)")
 				completion(nil)
+			} else {
+				completion(receipt)
 			}
 		}
 	}

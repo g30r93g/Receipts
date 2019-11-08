@@ -111,12 +111,11 @@ class Authentication {
 				completion(false)
 			} else {
 				self.auth.currentUser!.createProfileChangeRequest().displayName = name
+				self.storeDetails = Store(name: name, email: email, phoneNumber: phoneNumber, logo: nil)
 				
 				self.uploadStoreDetails(name: name, email: email, phoneNumber: phoneNumber) { (success) in
 					completion(success)
 				}
-				
-				self.storeDetails = Store(name: name, email: email, phoneNumber: phoneNumber, logo: nil)
 			}
 		}
     }
@@ -125,7 +124,7 @@ class Authentication {
     func signOut(completion: @escaping(Bool) -> Void) {
         do {
 			try self.auth.signOut()
-            print("Debug: User signed out successfully with no errors.")
+            print("User signed out successfully with no errors.")
             
             completion(true)
         } catch let error {
@@ -139,7 +138,10 @@ class Authentication {
 		if self.isSignedIn {
 			let credential = EmailAuthProvider.credential(withEmail: self.auth.currentUser!.email!, password: oldPassword)
 			self.auth.currentUser!.reauthenticateAndRetrieveData(with: credential) { (result, error) in
-				completion(error == nil && result != nil)
+				if let error = error {
+					print("Errorrror: \(error)")
+					completion(false)
+				}
 			}
 		} else {
 			completion(false)
@@ -162,11 +164,12 @@ class Authentication {
 		self.reauthenticate(oldPassword: oldPassword) { (success) in
 			if success {
 				self.auth.currentUser!.updatePassword(to: newPassword) { (error) in
-				if let error = error {
-					print("\(error)")
-				}
-				
-				completion(error != nil)
+					if let error = error {
+						print("\(error)")
+						completion(false)
+					}
+					
+					completion(true)
 				}
 			} else {
 				completion(false)
@@ -182,9 +185,10 @@ class Authentication {
 			userDocument.updateData(["phoneNumber" : newNumber]) { (error) in
 				if let error = error {
 					print("\(error)")
+					completion(false)
 				}
 				
-				completion(error != nil)
+				completion(true)
 			}
 		} else {
 			completion(false)
@@ -234,9 +238,10 @@ class Authentication {
 		userDocument.setData(["storeName": name, "email": email, "phoneNumber": phoneNumber, "receipts": [], "newReceipts": []]) { (error) in
 			if let error = error {
 				print("\(error)")
+				completion(false)
+			} else {
+				completion(true)
 			}
-			
-			completion(error != nil)
 		}
 	}
 	
@@ -307,11 +312,11 @@ class Authentication {
 		let userDocument: DocumentReference = data.collection("Stores").document(Authentication.account.uniqueIdentifier)
 		
 		userDocument.updateData(["storeName" : newName]) { (error) in
-		if let error = error {
-			print("\(error)")
-		}
-		
-		completion(error != nil)
+			if let error = error {
+				print("\(error)")
+			}
+			
+			completion(error == nil ? false : true)
 		}
 	}
 	

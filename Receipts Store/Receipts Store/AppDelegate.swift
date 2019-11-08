@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		settings.isPersistenceEnabled = true
 		db.settings = settings
 		
-		Authentication.account.signOut { (_) in print("Signed out on launch.") }
+//		Authentication.account.signOut { (_) in print("Signed out on launch.") }
 		
 		return true
 	}

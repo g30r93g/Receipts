@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F66EB202375D6AE0079B585 /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F66EB1F2375D6AE0079B585 /* Scanner.swift */; };
 		1F799DC8231001A700BD9166 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DC0231001A700BD9166 /* SignUpViewController.swift */; };
 		1F799DCA231001A700BD9166 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F799DC2231001A700BD9166 /* Onboarding.storyboard */; };
 		1F799DCC231001A700BD9166 /* CompleteSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */; };
@@ -17,13 +18,11 @@
 		1FBEB9E52365187900C92ACD /* ReceiptsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E42365187900C92ACD /* ReceiptsViewController.swift */; };
 		1FBEB9E72365188A00C92ACD /* SalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E62365188A00C92ACD /* SalesViewController.swift */; };
 		1FBEB9E92365189300C92ACD /* AddProductViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9E82365189300C92ACD /* AddProductViewController.swift */; };
-		1FBEB9EB2365189E00C92ACD /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9EA2365189E00C92ACD /* PaymentViewController.swift */; };
 		1FBEB9ED236518AE00C92ACD /* UserCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9EC236518AE00C92ACD /* UserCodeViewController.swift */; };
 		1FBEB9EF236518B700C92ACD /* SaleCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9EE236518B700C92ACD /* SaleCompleteViewController.swift */; };
 		1FBEB9F12365238C00C92ACD /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9F02365238C00C92ACD /* ItemCell.swift */; };
 		1FBEB9F32365245D00C92ACD /* ReceiptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9F22365245D00C92ACD /* ReceiptCell.swift */; };
 		1FBEB9F52365EEEE00C92ACD /* Sale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9F42365EEEE00C92ACD /* Sale.swift */; };
-		1FBEB9F723660A5D00C92ACD /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBEB9F623660A5D00C92ACD /* ScannerView.swift */; };
 		1FDD916A230FF81C008EE678 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD9169230FF81C008EE678 /* AppDelegate.swift */; };
 		1FDD916C230FF81C008EE678 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD916B230FF81C008EE678 /* SceneDelegate.swift */; };
 		1FDD9174230FF81C008EE678 /* Receipts_Store.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1FDD9172230FF81C008EE678 /* Receipts_Store.xcdatamodeld */; };
@@ -61,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1F66EB1F2375D6AE0079B585 /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
 		1F799DC0231001A700BD9166 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F799DC2231001A700BD9166 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteSignUpViewController.swift; sourceTree = "<group>"; };
@@ -71,13 +71,11 @@
 		1FBEB9E42365187900C92ACD /* ReceiptsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptsViewController.swift; sourceTree = "<group>"; };
 		1FBEB9E62365188A00C92ACD /* SalesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesViewController.swift; sourceTree = "<group>"; };
 		1FBEB9E82365189300C92ACD /* AddProductViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductViewController.swift; sourceTree = "<group>"; };
-		1FBEB9EA2365189E00C92ACD /* PaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
 		1FBEB9EC236518AE00C92ACD /* UserCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCodeViewController.swift; sourceTree = "<group>"; };
 		1FBEB9EE236518B700C92ACD /* SaleCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaleCompleteViewController.swift; sourceTree = "<group>"; };
 		1FBEB9F02365238C00C92ACD /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		1FBEB9F22365245D00C92ACD /* ReceiptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptCell.swift; sourceTree = "<group>"; };
 		1FBEB9F42365EEEE00C92ACD /* Sale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sale.swift; sourceTree = "<group>"; };
-		1FBEB9F623660A5D00C92ACD /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		1FDD9166230FF81C008EE678 /* Receipts Store.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Receipts Store.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FDD9169230FF81C008EE678 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FDD916B230FF81C008EE678 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			children = (
 				1FBEB9E62365188A00C92ACD /* SalesViewController.swift */,
 				1FBEB9E82365189300C92ACD /* AddProductViewController.swift */,
-				1FBEB9EA2365189E00C92ACD /* PaymentViewController.swift */,
 				1FBEB9EC236518AE00C92ACD /* UserCodeViewController.swift */,
 				1FBEB9EE236518B700C92ACD /* SaleCompleteViewController.swift */,
 			);
@@ -265,7 +262,7 @@
 				1FDD91A2230FF920008EE678 /* Round.swift */,
 				1FDD91A3230FF920008EE678 /* Image Text Field.swift */,
 				1FDD91A4230FF920008EE678 /* Gradient Background.swift */,
-				1FBEB9F623660A5D00C92ACD /* ScannerView.swift */,
+				1F66EB1F2375D6AE0079B585 /* Scanner.swift */,
 				1FA5BF962363A0E90005BFAB /* Table View Cell */,
 			);
 			path = "Supporting Views";
@@ -502,14 +499,12 @@
 				1FDD91B0230FF928008EE678 /* Authentication.swift in Sources */,
 				1FBEB9F52365EEEE00C92ACD /* Sale.swift in Sources */,
 				1FBEB9F32365245D00C92ACD /* ReceiptCell.swift in Sources */,
-				1FBEB9EB2365189E00C92ACD /* PaymentViewController.swift in Sources */,
 				1F799DD2231005CB00BD9166 /* AddLogoViewController.swift in Sources */,
 				1FDD91B9230FF92C008EE678 /* Calendar.swift in Sources */,
 				1FDD91B8230FF92C008EE678 /* String.swift in Sources */,
 				1F799DCF231001A700BD9166 /* SignInViewController.swift in Sources */,
 				1FDD9174230FF81C008EE678 /* Receipts_Store.xcdatamodeld in Sources */,
 				1F799DCC231001A700BD9166 /* CompleteSignUpViewController.swift in Sources */,
-				1FBEB9F723660A5D00C92ACD /* ScannerView.swift in Sources */,
 				1FBEB9F12365238C00C92ACD /* ItemCell.swift in Sources */,
 				1F799DC8231001A700BD9166 /* SignUpViewController.swift in Sources */,
 				1FDD91A7230FF920008EE678 /* Round.swift in Sources */,
@@ -518,6 +513,7 @@
 				1FDD91A8230FF920008EE678 /* Image Text Field.swift in Sources */,
 				1FDD916C230FF81C008EE678 /* SceneDelegate.swift in Sources */,
 				1FDD91B7230FF92C008EE678 /* Date.swift in Sources */,
+				1F66EB202375D6AE0079B585 /* Scanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

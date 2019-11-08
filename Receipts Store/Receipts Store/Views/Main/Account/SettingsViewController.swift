@@ -129,7 +129,6 @@ extension SettingsViewController {
 				let alert = UIAlertController(title: "Update Store Name", message: nil, preferredStyle: .alert)
 				
 				alert.addTextField { (textField) in
-					textField.isSecureTextEntry = true
 					textField.keyboardAppearance = .dark
 					textField.placeholder = "Store Name"
 					textField.text = Authentication.account.storeDetails.name
