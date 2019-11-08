@@ -27,7 +27,7 @@
                                 <color key="textColor" name="Text"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="7" rowHeight="100" estimatedRowHeight="100" sectionHeaderHeight="1" sectionFooterHeight="1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xuf-11-y5E">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" sectionIndexMinimumDisplayRowCount="7" rowHeight="100" estimatedRowHeight="100" sectionHeaderHeight="1" sectionFooterHeight="1" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xuf-11-y5E">
                                 <rect key="frame" x="0.0" y="183" width="414" height="630"/>
                                 <color key="backgroundColor" name="Background"/>
                                 <color key="sectionIndexColor" red="0.74594616430000005" green="0.80566382270000003" blue="0.83411326139999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -63,11 +63,11 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="£xxx.xx" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZC5-pd-jUJ" customClass="RoundLabel" customModule="Receipts" customModuleProvider="target">
-                                                    <rect key="frame" x="318" y="30" width="80" height="40"/>
+                                                    <rect key="frame" x="310" y="30" width="88" height="40"/>
                                                     <color key="backgroundColor" name="Primary Accent"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="0Hz-kf-aWg"/>
-                                                        <constraint firstAttribute="width" constant="80" id="ppt-bh-XFq"/>
+                                                        <constraint firstAttribute="width" constant="88" id="ppt-bh-XFq"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                     <color key="textColor" name="Text"/>
@@ -171,6 +171,13 @@
                                             <color key="textColor" name="Text"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qrcode" catalog="system" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Je-wh-EQu">
+                                            <rect key="frame" x="362" y="9" width="44" height="41.5"/>
+                                            <color key="tintColor" name="Text"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="2Je-wh-EQu" secondAttribute="height" multiplier="1:1" id="1cx-Rc-zy1"/>
+                                            </constraints>
+                                        </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7E-8I-Uyx">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                             <connections>
@@ -182,7 +189,10 @@
                                         <constraint firstItem="m7E-8I-Uyx" firstAttribute="top" secondItem="Ri2-FB-lbC" secondAttribute="top" id="0as-3E-UlZ"/>
                                         <constraint firstItem="Lfe-Nf-QNA" firstAttribute="centerY" secondItem="Ri2-FB-lbC" secondAttribute="centerY" id="A2o-OJ-dTf"/>
                                         <constraint firstAttribute="trailing" secondItem="m7E-8I-Uyx" secondAttribute="trailing" id="Ex6-1G-k0w"/>
+                                        <constraint firstAttribute="bottom" secondItem="2Je-wh-EQu" secondAttribute="bottom" constant="8" id="LfE-M6-di6"/>
                                         <constraint firstItem="Lfe-Nf-QNA" firstAttribute="leading" secondItem="Ri2-FB-lbC" secondAttribute="leading" constant="20" id="S2l-6G-AXb"/>
+                                        <constraint firstAttribute="trailing" secondItem="2Je-wh-EQu" secondAttribute="trailing" constant="8" id="TX1-Sm-rfi"/>
+                                        <constraint firstItem="2Je-wh-EQu" firstAttribute="top" secondItem="Ri2-FB-lbC" secondAttribute="top" constant="8" id="gcm-gA-n2A"/>
                                         <constraint firstItem="m7E-8I-Uyx" firstAttribute="leading" secondItem="Ri2-FB-lbC" secondAttribute="leading" id="pg3-G1-0QS"/>
                                         <constraint firstAttribute="bottom" secondItem="m7E-8I-Uyx" secondAttribute="bottom" id="vPw-Jz-NnY"/>
                                     </constraints>
@@ -212,7 +222,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Receipts" id="uP9-D5-gel"/>
+                    <navigationItem key="navigationItem" title="Receipts" id="uP9-D5-gel">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="lSC-kM-ATa">
+                            <connections>
+                                <action selector="refreshTapped:" destination="BYZ-38-t0r" id="edD-9x-dNZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="newReceiptNotification" destination="4b5-RI-MYm" id="GRF-LV-R4y"/>
                         <outlet property="newReceiptNotificationHeight" destination="vee-L0-Wax" id="5a7-Cz-Xxr"/>
@@ -955,6 +971,7 @@
         <image name="chevron" width="36" height="12"/>
         <image name="person.circle" catalog="system" width="64" height="60"/>
         <image name="person.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="qrcode" catalog="system" width="64" height="56"/>
         <namedColor name="Background">
             <color red="0.052000001072883606" green="0.054000001400709152" blue="0.071000002324581146" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

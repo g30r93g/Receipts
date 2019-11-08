@@ -105,7 +105,7 @@ class Receipts {
 			} else if let document = document {
 				let data = document.data()!
 				let receiptReferences = data["receipts"] as! [DocumentReference]
-				let unreadReceiptReferences = data["newReceipts"] as! [DocumentReference]
+				let unreadReceiptReferences = data["unreadReceipts"] as! [DocumentReference]
 			
 				for receiptReference in receiptReferences {
 					receipts.append(DocReferences(reference: receiptReference, isSeen: !unreadReceiptReferences.contains(receiptReference)))
@@ -140,7 +140,7 @@ class Receipts {
 					var storeDetails: StoreDetails {
 						let store = data["store"] as! [String : Any]
 						
-						let uid: String = store["uid"] as! String
+						let uid: String = store["uuid"] as! String
 						let name: String = store["name"] as! String
 						let location: GeoPoint = store["location"] as! GeoPoint
 						
@@ -148,17 +148,17 @@ class Receipts {
 					}
 					
 					var transactionDetails: ReceiptDetails {
-						let details = data["transactionDetails"] as! [String : Any]
+						let details = data["transaction"] as! [String : Any]
 						let items = details["items"] as! [[String : Any]]
 						let paymentMethods = details["paymentMethods"] as! [[String : Any]]
 						
 						let subtotal: Double = details["subtotal"] as! Double
 						let total: Double = details["total"] as! Double
-						let discountAmount: Double? = details["discountAmount"] as? Double ?? nil
+						let discountAmount: Double = details["discount"] as! Double
 						
 						var decodedItems: [Item] = []
 						for item in items {
-							let uid: String = item["uid"] as! String
+							let uid: String = item["uuid"] as! String
 							let name: String = item["name"] as! String
 							let price: Double = item["price"] as! Double
 							let quantity: Int = item["quantity"] as! Int

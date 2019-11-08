@@ -31,6 +31,10 @@ class ReceiptsViewController: UIViewController {
 	// MARK: IBActions
 	@IBAction func viewReceipts(_ sender: UIStoryboardSegue) { }
 	
+	@IBAction func refreshTapped(_ sender: UIBarButtonItem) {
+		self.updateReceipts()
+	}
+	
 }
 
 extension ReceiptsViewController: UITableViewDelegate, UITableViewDataSource {

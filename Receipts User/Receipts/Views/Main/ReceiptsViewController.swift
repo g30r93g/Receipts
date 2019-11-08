@@ -27,9 +27,14 @@ class ReceiptsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 		
-		self.updateNewReceiptNotifier()
 		self.getReceipts()
     }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		self.updateNewReceiptNotifier()
+	}
 	
 	// MARK: Methods
 	private func getReceipts() {
@@ -125,6 +130,10 @@ class ReceiptsViewController: UIViewController {
 	
 	@IBAction func showUserCode(_ sender: UIButton) {
 		self.performSegue(withIdentifier: "Show User Code", sender: nil)
+	}
+	
+	@IBAction func refreshTapped(_ sender: UIBarButtonItem) {
+		self.getReceipts()
 	}
 	
 }

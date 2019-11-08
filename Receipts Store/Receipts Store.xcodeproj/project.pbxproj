@@ -63,6 +63,7 @@
 /* Begin PBXFileReference section */
 		1F66EB1F2375D6AE0079B585 /* Scanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
 		1F66EB21237620480079B585 /* UploadLogoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadLogoViewController.swift; sourceTree = "<group>"; };
+		1F66EB23237623D60079B585 /* FirebaseCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F799DC0231001A700BD9166 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		1F799DC2231001A700BD9166 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		1F799DC4231001A700BD9166 /* CompleteSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompleteSignUpViewController.swift; sourceTree = "<group>"; };
@@ -301,6 +302,7 @@
 		2D4AD34B3E74E03A31DBB642 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F66EB23237623D60079B585 /* FirebaseCore.framework */,
 				6341DB5482BF05F8403B1CC1 /* Pods_Receipts_Store.framework */,
 			);
 			name = Frameworks;

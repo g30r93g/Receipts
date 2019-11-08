@@ -128,7 +128,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Receipts" id="uP9-D5-gel"/>
+                    <navigationItem key="navigationItem" title="Receipts" id="uP9-D5-gel">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="JLe-3s-MAC">
+                            <connections>
+                                <action selector="refreshTapped:" destination="BYZ-38-t0r" id="F9u-gf-TX5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="receiptsTable" destination="Xuf-11-y5E" id="44E-aM-Rbk"/>
                     </connections>
