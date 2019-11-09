@@ -116,6 +116,8 @@ extension UserCodeViewController: AVCaptureMetadataOutputObjectsDelegate {
 		
 		// Add region of interest
 		metadataOutput.rectOfInterest = self.previewLayer.metadataOutputRectConverted(fromLayerRect: self.scanOutline.frame)
+		
+		print("Started scanning QR codes")
 	}
 	
 	func startCaptureSession() {

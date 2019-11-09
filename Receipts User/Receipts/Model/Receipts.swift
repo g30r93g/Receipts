@@ -16,7 +16,11 @@ class Receipts {
 	static let current = Receipts()
 	
 	// MARK: Firestore Data Variables
-	var receipts: [Receipt] = []
+	var receipts: [Receipt] = [] {
+		didSet {
+			self.receipts.sort(by: {$0.date.dateValue() < $1.date.dateValue()} )
+		}
+	}
 	
 	// MARK: Firestore Data Structs
 	struct Receipt {

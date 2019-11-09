@@ -19,6 +19,7 @@ class Receipts {
 	var receipts: [Receipt] = [] {
 		didSet {
 			NotificationCenter.default.post(name: Notification.Name("ReceiptsChanged"), object: nil)
+			self.receipts.sort(by: {$0.date.dateValue() < $1.date.dateValue()} )
 		}
 	}
 	var store: StoreDetails {

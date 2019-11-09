@@ -141,7 +141,7 @@ extension SettingsViewController {
 					
 					Authentication.account.updateStoreName(newName: newStoreName) { (success) in
 						if success {
-							self.showConfirmationAlert(text: "Phone number updated!")
+							self.showConfirmationAlert(text: "Store Name Updated!")
 						} else {
 							fatalError()
 						}
@@ -149,9 +149,6 @@ extension SettingsViewController {
 				}))
 				
 				self.present(alert, animated: true, completion: nil)
-			case 4:
-				// Update Store Logo
-				break
 			default:
 				break
 			}

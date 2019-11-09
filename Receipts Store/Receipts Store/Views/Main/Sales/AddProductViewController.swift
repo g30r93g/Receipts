@@ -116,6 +116,8 @@ extension AddProductViewController: AVCaptureMetadataOutputObjectsDelegate {
 		
 		// Add region of interest
 		metadataOutput.rectOfInterest = self.previewLayer.metadataOutputRectConverted(fromLayerRect: self.scanOutline.frame)
+		
+		print("Started scaning items.")
 	}
 	
 	func startCaptureSession() {

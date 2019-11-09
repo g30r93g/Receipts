@@ -215,10 +215,10 @@
                                 </userDefinedRuntimeAttributes>
                             </button>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CkO-RG-aqr" customClass="RoundView" customModule="Receipts_Store" customModuleProvider="target">
-                                <rect key="frame" x="48" y="250" width="318" height="200"/>
+                                <rect key="frame" x="48" y="250" width="318" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="tgr-NP-aXW"/>
+                                    <constraint firstAttribute="height" constant="400" id="tgr-NP-aXW"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -728,7 +728,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" name="Text Field"/>
                                         <connections>
-                                            <segue destination="Ic0-TV-Xci" kind="presentation" id="IeH-vp-dLI"/>
+                                            <segue destination="Ic0-TV-Xci" kind="presentation" identifier="Update Store Logo" id="IeH-vp-dLI"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -948,10 +948,10 @@
                                 <blurEffect style="dark"/>
                             </visualEffectView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B35-d6-9FO" customClass="RoundView" customModule="Receipts_Store" customModuleProvider="target">
-                                <rect key="frame" x="48" y="239" width="318" height="318"/>
+                                <rect key="frame" x="48" y="98" width="318" height="600"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="B35-d6-9FO" secondAttribute="height" multiplier="1:1" id="Y4c-Ud-fso"/>
+                                    <constraint firstAttribute="height" constant="600" id="Ld8-Fh-wMp"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
