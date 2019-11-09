@@ -320,4 +320,23 @@ class Authentication {
 		}
 	}
 	
+	// MARK: Validate Users
+	func validateCode(_ code: String, completion: @escaping(Bool) -> Void) {
+		guard let url = URL(string: "https://us-central1-receipts-baa60.cloudfunctions.net/api/checkUserID/\(code)") else { completion(false); return }
+		
+		URLSession.shared.dataTask(with: url) { (_, response, error) in
+			
+			guard let responseCode = (response as? HTTPURLResponse)?.statusCode else { print("Unable to determine response code."); completion(false); return }
+			
+			if let error = error {
+				print("Error: \(error)")
+				completion(false)
+			} else if responseCode == 200 {
+				completion(true)
+			} else {
+				completion(false)
+			}
+		}.resume()
+	}
+	
 }

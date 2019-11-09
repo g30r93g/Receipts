@@ -90,9 +90,9 @@ class Sale {
 	}
 	
 	func uploadReceipt(userCode: String, completion: @escaping(Bool) -> Void) {
+		self.userCode = userCode
 		Receipts.current.uploadSalesReceipt(sale: self) { (receipt) in
 			if let receipt = receipt {
-				self.userCode = userCode
 				self.receipt = receipt
 				
 				completion(true)

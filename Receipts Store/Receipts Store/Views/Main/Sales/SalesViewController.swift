@@ -44,9 +44,7 @@ class SalesViewController: UIViewController {
 	// MARK: Navigation
 	
 	// MARK: IBActions
-	@IBAction func processAnotherSale(_ sender: UIStoryboardSegue) {
-		
-	}
+	@IBAction func processAnotherSale(_ sender: UIStoryboardSegue) { }
 	
 }
 

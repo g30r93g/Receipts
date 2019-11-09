@@ -29,14 +29,28 @@ class UserCodeViewController: UIViewController {
 	}
 	
 	// MARK: Methods
-	private func validateCode(_ code: String, completion: @escaping(Bool) -> Void) {
-		// TODO: - Create a firebase function to check if a user exists
-		completion(true)
+	private func showLoadingView() {
+		self.qrIcon.tintColor = .systemOrange
+		// TODO: - Show loading view
 	}
 	
-	private func showLoadingView() {
-		self.qrIcon.tintColor = UIColor(named: "Confirm")!
-		// TODO: - Show loading view
+	private func showBadCodeAlert() {
+		let alert = UIAlertController(title: "User Not Found", message: "Please use a different QR code.", preferredStyle: .alert)
+
+		alert.addAction(UIAlertAction(title: "Ok", style: .default) { (_) in self.dismiss(animated: true, completion: nil) })
+        present(alert, animated: true)
+	}
+	
+	private func generateReceipt(with code: String) {
+		Sale.current.attatchPaymentDetails(details: [Receipts.PaymentMethod(type: .card, amount: Sale.current.total, cardNumber: 5355220212344341, cardVendor: .mastercard, creditRemaining: 0)])
+		
+		Sale.current.uploadReceipt(userCode: code) { (success) in
+			if success {
+				self.performSegue(withIdentifier: "Sale Complete", sender: self)
+			} else {
+				fatalError()
+			}
+		}
 	}
 	
 }
@@ -134,19 +148,18 @@ extension UserCodeViewController: AVCaptureMetadataOutputObjectsDelegate {
 			print("Found QR Code: \(stringValue)")
 
 			self.showLoadingView()
-			self.validateCode(stringValue) { (valid) in
+			
+			Authentication.account.validateCode(stringValue) { (valid) in
 				if valid {
-					Sale.current.attatchPaymentDetails(details: [Receipts.PaymentMethod(type: .card, amount: Sale.current.total, cardNumber: 5355220212344341, cardVendor: .mastercard, creditRemaining: 0)])
-					
-					Sale.current.uploadReceipt(userCode: stringValue) { (success) in
-						if success {
-							self.performSegue(withIdentifier: "Sale Complete", sender: self)
-						} else {
-							fatalError()
-						}
+					DispatchQueue.main.async {
+						self.qrIcon.tintColor = UIColor(named: "Confirm")!
+						self.generateReceipt(with: stringValue)
 					}
 				} else {
-					fatalError()
+					DispatchQueue.main.async {
+						self.qrIcon.tintColor = .systemRed
+						self.showBadCodeAlert()
+					}
 				}
 			}
         }

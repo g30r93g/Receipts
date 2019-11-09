@@ -33,6 +33,7 @@ class Receipts {
 		let identifier: String
 		let storeDetails: StoreDetails
 		let transactionDetails: ReceiptDetails
+		let userID: String
 	}
 	
 	struct StoreDetails {
@@ -163,8 +164,7 @@ class Receipts {
 				print("\(error)")
 				completion([])
 				return
-			} else if let document = document {
-				let data = document.data()!
+			} else if let data = document?.data() {
 				let receiptReferences = data["receipts"] as! [DocumentReference]
 				let unreadReceiptReferences = data["unreadReceipts"] as! [DocumentReference]
 				
@@ -181,6 +181,7 @@ class Receipts {
 		// Get Each Receipt
 		print("Getting Receipt Details...")
 		let receiptReference: CollectionReference = data.collection("Receipts")
+		self.receipts.removeAll()
 		
 		for reference in references {
 			receiptReference.document(reference.reference.documentID).getDocument { (matchingDocument, error) in
@@ -194,6 +195,7 @@ class Receipts {
 					
 					let seen: Bool = reference.isSeen
 					let date: Timestamp = data["date"] as! Timestamp
+					let user: String = data["user"] as! String
 					
 					var storeDetails: StoreDetails {
 						let store = data["store"] as! [String : Any]
@@ -239,7 +241,7 @@ class Receipts {
 						return ReceiptDetails(items: decodedItems, subtotal: subtotal, discount: discountAmount, total: total, paymentMethods: decodedPaymentMethods)
 					}
 					
-					self.receipts.append(Receipt(seen: seen, date: date, identifier: reference.reference.documentID, storeDetails: storeDetails, transactionDetails: transactionDetails))
+					self.receipts.append(Receipt(seen: seen, date: date, identifier: reference.reference.documentID, storeDetails: storeDetails, transactionDetails: transactionDetails, userID: user))
 					
 					print("New Receipt Parsed! - \(self.receipts)")
 					
@@ -260,12 +262,13 @@ class Receipts {
 		
 		let transactionDetails: ReceiptDetails = ReceiptDetails(items: sale.items.map({Item(uuid: $0.uuid, name: $0.name, price: $0.price, quantity: $0.quantity)}), subtotal: sale.total, discount: 0, total: sale.total, paymentMethods: sale.payment)
 		
-		let receipt: Receipts.Receipt = Receipts.Receipt(seen: false, date: Date().convertToTimestamp(), identifier: newReceiptDocument.documentID, storeDetails: self.store, transactionDetails: transactionDetails)
+		let receipt: Receipts.Receipt = Receipts.Receipt(seen: false, date: Date().convertToTimestamp(), identifier: newReceiptDocument.documentID, storeDetails: self.store, transactionDetails: transactionDetails, userID: sale.userCode)
 		print("Receipt ID: \(receipt.identifier)")
+		print("User ID: \(receipt.userID)")
 		
 		newReceiptDocument.setData([
 			"date" : receipt.date,
-			"user" : sale.userCode,
+			"user" : receipt.userID,
 			"store" : receipt.storeDetails.toAnyObject(),
 			"transaction" : receipt.transactionDetails.toAnyObject(),
 		]) { (error) in

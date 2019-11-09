@@ -94,6 +94,8 @@ class Receipts {
 	// MARK: Firestore Methods
 	/// Retrieves all receipt references
 	private func getReceiptRefs(completion: @escaping([DocReferences]) -> Void) {
+		print("Getting Receipt References...")
+		
 		let userReference: DocumentReference = data.collection("Users").document(Authentication.account.uniqueIdentifier)
 		
 		// Get Receipt Document References
@@ -102,18 +104,15 @@ class Receipts {
 			if let error = error {
 				print("\(error)")
 				completion([])
-			} else if let document = document {
-				let data = document.data()!
+			} else if let data = document?.data() {
+				
 				let receiptReferences = data["receipts"] as! [DocumentReference]
 				let unreadReceiptReferences = data["unreadReceipts"] as! [DocumentReference]
 			
-				for receiptReference in receiptReferences {
-					receipts.append(DocReferences(reference: receiptReference, isSeen: !unreadReceiptReferences.contains(receiptReference)))
-				}
+				receiptReferences.forEach( { receipts.append(DocReferences(reference: $0, isSeen: !unreadReceiptReferences.contains($0))) } )
 				
 				completion(receipts)
 			} else {
-				print("\(error)")
 				completion([])
 			}
 		}
@@ -123,6 +122,7 @@ class Receipts {
 	private func getReceiptDetails(references: [DocReferences], completion: @escaping([Receipt]) -> Void) {
 		print("Getting Receipt Details... - \(references)")
 		let receiptReference: CollectionReference = data.collection("Receipts")
+		self.receipts.removeAll()
 		
 		for reference in references {
 			receiptReference.document(reference.reference.documentID).getDocument { (matchingDocument, error) in
@@ -204,7 +204,6 @@ class Receipts {
 	}
 	
 	func retrieveReceipts(endDate: Timestamp, completion: @escaping([Receipt]) -> Void) {
-		print("Getting Receipt References...")
 		self.getReceiptRefs { (references) in
 			self.getReceiptDetails(references: references) { (receipts) in
 				completion(receipts)
